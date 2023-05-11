@@ -46,9 +46,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
   try {
     if (proposal.value.captcha.toLowerCase() !== "flensburg")
       throw Error("Wrong Captcha");
-    console.log("proposal.value", proposal.value);
-    const data = await createProposal(proposal.value);
-    console.log("data", data);
+    await createProposal(proposal.value);
   } catch (error) {
     console.error(error);
   }

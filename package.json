@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.21.0",
     "dayjs": "^1.11.7",
+    "localforage": "^1.10.0",
     "primeflex": "^3.3.0",
     "primevue": "^3.27.0",
     "vee-validate": "^4.8.6",

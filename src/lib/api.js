@@ -2,8 +2,12 @@ import { supabase } from "../supabase";
 import * as aes from "./webcrypto/aes.js";
 import * as rsa from "./webcrypto/rsa.js";
 import { randomString } from "./webcrypto/helpers.js";
+import { store } from "./store.js";
+
+// encryption
 
 const crypto = window.crypto;
+
 const publicKeyObj = {
   alg: "RSA-OAEP-512",
   e: "AQAB",
@@ -25,40 +29,84 @@ const getPublicKey = async (publicKey) =>
     ["encrypt"]
   );
 
-const encryptProposal = async (proposal) => {
-  const proposalString = JSON.stringify(proposal);
-  console.log("proposal strin", proposalString);
+const getPrivateKey = async (privateKey) =>
+  await crypto.subtle.importKey(
+    "jwk",
+    privateKey,
+    {
+      name: "RSA-OAEP",
+      hash: { name: "SHA-512" },
+    },
+    false,
+    ["decrypt"]
+  );
 
+const encryptProposalData = async (proposal) => {
   const aesPassword = randomString(64);
-  const encryptedProposal = await aes.encrypt(proposalString, aesPassword);
-  console.log("encryptedProposal", encryptedProposal);
-
-  const encryptedAesPassword = await rsa.encrypt(
+  const encryptedData = await aes.encrypt(
+    JSON.stringify(proposal),
+    aesPassword
+  );
+  const encryptedSymatricKey = await rsa.encrypt(
     aesPassword,
     await getPublicKey(publicKeyObj)
   );
+
+  return { encryptedData, encryptedSymatricKey };
+};
+
+const decryptProposalData = async (encryptedData, encryptedSymatricKey) => {
+  const symatricKey = await rsa.decrypt(
+    encryptedSymatricKey,
+    await getPrivateKey(store.encryption.privateKey)
+  );
+  const proposalData = JSON.parse(
+    await aes.decrypt(encryptedData, symatricKey)
+  );
+
   return {
-    encryptedAesPassword,
-    encryptedProposal,
+    proposalData,
+    symatricKey,
   };
 };
 
-const createProposal = async (proposal) => {
-  const { encryptedProposal, encryptedAesPassword } = await encryptProposal(
-    proposal
-  );
+// supabase api wrapper
 
-  const { data } = await supabase
+const createProposal = async (proposalData) => {
+  const { encryptedData, encryptedSymatricKey } = await encryptProposalData(
+    proposalData
+  );
+  await supabase
     .from("proposals")
     .insert({
-      thesis_name: proposal.thesisName,
-      encrypted_proposal: encryptedProposal,
-      encrypted_symatric_key: encryptedAesPassword,
+      thesis_name: proposalData.thesisName,
+      encrypted_data: encryptedData,
+      encrypted_symatric_key: encryptedSymatricKey,
       status: "created", // TODO: Not filled from frontend?
       track: "2023.winter",
     })
     .throwOnError();
-  return data;
 };
 
-export { createProposal, encryptProposal };
+const getProposalById = async (id) => {
+  const {
+    data: [encryptedProposal],
+  } = await supabase
+    .from("proposals")
+    .select(`*, opinions(*,profiles(*))`)
+    .eq("id", id)
+    .throwOnError();
+
+  const { proposalData } = await decryptProposalData(
+    encryptedProposal.encrypted_data,
+    encryptedProposal.encrypted_symatric_key
+  );
+  const proposal = {
+    ...encryptedProposal,
+    data: proposalData,
+  };
+
+  return proposal;
+};
+
+export { createProposal, getProposalById };

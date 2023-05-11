@@ -10,6 +10,7 @@ import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
+import { getProposalById } from "../../lib/api.js";
 
 const route = useRoute();
 const loading = ref(false);
@@ -29,14 +30,11 @@ onMounted(async () => {
   try {
     proposalId.value = route.params.id;
     if (!proposalId.value) throw Error("Keine ID übergeben");
-    let { data } = await supabase
-      .from("proposals")
-      .select(`*, opinions(*,profiles(*))`)
-      .eq("id", proposalId.value)
-      .throwOnError();
-    proposal.value = data[0];
-    proposal.value.proposal = JSON.parse(data[0].encrypted_proposal);
-    items.value[0].label = `${data[0].id} - ${data[0].thesis_name}`;
+
+    proposal.value = await getProposalById(proposalId.value);
+    console.log(proposal.value);
+
+    items.value[0].label = `${proposal.value.id} - ${proposal.value.thesis_name}`;
     proposal.value.vote_average = proposal.value.opinions.reduce(
       (accumulator, currentValue) => accumulator + currentValue.vote,
       0
@@ -47,11 +45,12 @@ onMounted(async () => {
     proposal.value.vote_count = proposal.value.opinions.filter(
       (opinion) => !!opinion.vote
     ).length;
+
     const { data: session } = await supabase.auth.getSession();
     currentUserId.value = session.session?.user?.id;
-    myOpinion.value = data[0].opinions.filter(
+    myOpinion.value = proposal.value.opinions.find(
       (opinion) => opinion.profile_id === currentUserId.value
-    )[0];
+    );
   } catch (error) {
     console.error(error);
     toast.add({
@@ -78,7 +77,7 @@ onMounted(async () => {
         <Card>
           <template #title>Bewerbung</template>
           <template #content>
-            <article v-for="(value, name, index) in proposal.proposal">
+            <article v-for="(value, name) in proposal.data" :key="name">
               <span class="font-bold"
                 >{{ proposal_fields[name]?.de || name }}:
               </span>
