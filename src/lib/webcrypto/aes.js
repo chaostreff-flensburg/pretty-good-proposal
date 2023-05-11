@@ -1,17 +1,12 @@
-import { dec, enc } from "./helpers.ts";
-import { base64ToBuff, buffToBase64 } from "./helpers.ts";
+import { dec, enc, base64ToBuff, buffToBase64 } from "./helpers.js";
 
-const getPasswordKey = (password: string) =>
+const getPasswordKey = (password) =>
   window.crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, [
     "deriveBits",
     "deriveKey",
   ]);
 
-const deriveKey = (
-  passwordKey: CryptoKey,
-  salt: BufferSource,
-  keyUsage: Array<KeyUsage>,
-) =>
+const deriveKey = (passwordKey, salt, keyUsage) =>
   window.crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
@@ -22,10 +17,10 @@ const deriveKey = (
     passwordKey,
     { name: "AES-GCM", length: 256 },
     false,
-    keyUsage,
+    keyUsage
   );
 
-export const encrypt = async (data: string, password: string) => {
+export const encrypt = async (data, password) => {
   const salt = window.crypto.getRandomValues(new Uint8Array(16));
   const iv = window.crypto.getRandomValues(new Uint8Array(12));
   const passwordKey = await getPasswordKey(password);
@@ -36,12 +31,12 @@ export const encrypt = async (data: string, password: string) => {
       iv: iv,
     },
     aesKey,
-    enc.encode(data),
+    enc.encode(data)
   );
 
   const encryptedContentArr = new Uint8Array(encryptedContent);
   let buff = new Uint8Array(
-    salt.byteLength + iv.byteLength + encryptedContentArr.byteLength,
+    salt.byteLength + iv.byteLength + encryptedContentArr.byteLength
   );
   buff.set(salt, 0);
   buff.set(iv, salt.byteLength);
@@ -50,7 +45,7 @@ export const encrypt = async (data: string, password: string) => {
   return base64Buff;
 };
 
-export const decrypt = async (cipher: string, password: string) => {
+export const decrypt = async (cipher, password) => {
   const encryptedDataBuff = base64ToBuff(cipher);
   const salt = encryptedDataBuff.slice(0, 16);
   const iv = encryptedDataBuff.slice(16, 16 + 12);
@@ -63,7 +58,7 @@ export const decrypt = async (cipher: string, password: string) => {
       iv: iv,
     },
     aesKey,
-    data,
+    data
   );
   return dec.decode(decryptedContent);
 };
