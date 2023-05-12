@@ -42,13 +42,13 @@ const getPrivateKey = async (privateKey) =>
   );
 
 const encryptProposalData = async (proposal) => {
-  const aesPassword = randomString(64);
+  const symatricKey = randomString(128);
   const encryptedData = await aes.encrypt(
     JSON.stringify(proposal),
-    aesPassword
+    symatricKey
   );
   const encryptedSymatricKey = await rsa.encrypt(
-    aesPassword,
+    symatricKey,
     await getPublicKey(publicKeyObj)
   );
 
