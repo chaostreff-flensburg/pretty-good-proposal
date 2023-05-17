@@ -31,23 +31,14 @@ onMounted(async () => {
     proposalId.value = route.params.id;
     if (!proposalId.value) throw Error("Keine ID übergeben");
 
+    const {
+      data: { session = null },
+    } = await supabase.auth.getSession();
+    currentUserId.value = session?.user?.id;
+
     proposal.value = await getProposalById(proposalId.value);
-    console.log(proposal.value);
-
     items.value[0].label = `${proposal.value.id} - ${proposal.value.thesis_name}`;
-    proposal.value.vote_average = proposal.value.opinions.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.vote,
-      0
-    );
-    proposal.value.comments_count = proposal.value.opinions.filter(
-      (opinion) => !!opinion.comment && opinion.comment !== ""
-    ).length;
-    proposal.value.vote_count = proposal.value.opinions.filter(
-      (opinion) => !!opinion.vote
-    ).length;
 
-    const { data: session } = await supabase.auth.getSession();
-    currentUserId.value = session.session?.user?.id;
     myOpinion.value = proposal.value.opinions.find(
       (opinion) => opinion.profile_id === currentUserId.value
     );

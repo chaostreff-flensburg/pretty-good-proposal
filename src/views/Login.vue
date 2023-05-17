@@ -8,7 +8,7 @@ import Button from "primevue/button";
 import { useToast } from "primevue/usetoast";
 
 const loading = ref(false);
-const email = ref("spam@adb.sh");
+const email = ref("samuel.brinkmann@gmail.com");
 const toast = useToast();
 const router = useRouter();
 

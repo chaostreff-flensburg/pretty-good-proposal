@@ -1,4 +1,6 @@
-import { supabase } from "../supabase";
+import { supabase } from "../supabase.js";
+import { fromProposal } from "./structs.js";
+import { decryptProposalData, encryptProposalData } from "./crypto.js";
 
 const createProposal = async (proposalData) => {
   const { encryptedData, encryptedSymatricKey } = await encryptProposalData(
@@ -29,12 +31,11 @@ const getProposalById = async (id) => {
     encryptedProposal.encrypted_data,
     encryptedProposal.encrypted_symatric_key
   );
-  const proposal = {
+
+  return fromProposal({
     ...encryptedProposal,
     data: proposalData,
-  };
-
-  return proposal;
+  });
 };
 
 export { createProposal, getProposalById };
