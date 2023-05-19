@@ -32,7 +32,7 @@ const items = [
 </script>
 <template>
   <header>
-    <Menubar v-if="route.meta.requiresAuth" :model="items">
+    <Menubar :model="items">
       <template #start> #CCS Pretty Good Propopsal </template>
       <template #end>
         <Button label="Logout" @click="logout" />

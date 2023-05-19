@@ -6,6 +6,7 @@ import SubmitProposal from "../views/Proposal.vue";
 // import Crypto from '../views/Crypto.vue'
 
 import Overview from "../views/orga/Overview.vue";
+import OrgaView from "../views/OrgaView.vue";
 import Proposal from "../views/orga/Proposal.vue";
 import Profile from "../views/orga/Profile.vue";
 import Faq from "../views/orga/Faq.vue";
@@ -23,42 +24,47 @@ const router = createRouter({
       name: "login",
       component: Login,
     },
-    // {
-    //   path: '/crypto',
-    //   name: 'crypto',
-    //   component: Crypto
-    // },
     {
       path: "/orga",
       name: "overview",
-      component: Overview,
+      component: OrgaView,
       meta: {
         requiresAuth: true,
       },
-    },
-    {
-      path: "/orga/profile",
-      name: "profile",
-      component: Profile,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: "/proposal/:id",
-      name: "proposal",
-      component: Proposal,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: "/orga/faq",
-      name: "faq",
-      component: Faq,
-      meta: {
-        requiresAuth: true,
-      },
+      children: [
+        {
+          path: "",
+          name: "orga",
+          component: Overview,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "faq",
+          name: "faq",
+          component: Faq,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "profile",
+          name: "profile",
+          component: Profile,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "/proposal/:id",
+          name: "proposal",
+          component: Proposal,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+      ],
     },
   ],
 });

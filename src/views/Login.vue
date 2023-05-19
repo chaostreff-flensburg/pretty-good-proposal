@@ -53,12 +53,14 @@ const handleLogin = async () => {
 };
 </script>
 <template>
-  <Toast />
-  <div class="flex justify-content-center">
-    <div class="flex flex-column gap-2">
-      <h1>Login</h1>
-      <InputText v-model="email" type="email" />
-      <Button label="Jetzt Anmelden" @click="handleLogin" />
+  <main>
+    <Toast />
+    <div class="flex justify-content-center">
+      <div class="flex flex-column gap-2">
+        <h1>Login</h1>
+        <InputText v-model="email" type="email" />
+        <Button label="Jetzt Anmelden" @click="handleLogin" />
+      </div>
     </div>
-  </div>
+  </main>
 </template>

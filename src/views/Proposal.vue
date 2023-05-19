@@ -53,7 +53,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 });
 </script>
 <template>
-  <div class="card">
+  <main class="card">
     <h2>Jetzt Bewerben</h2>
     <form @submit="onSubmit">
       <div class="formgrid grid">
@@ -136,5 +136,5 @@ const onSubmit = handleSubmit(async (values, actions) => {
       </div>
       <Button type="submit" label="Abschicken" />
     </form>
-  </div>
+  </main>
 </template>
