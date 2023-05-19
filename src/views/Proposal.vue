@@ -125,14 +125,14 @@ const onSubmit = handleSubmit(async (values, actions) => {
       </div>
       <div class="field col flex flex-column">
         <label for="captcha"
-          >Captcha: Aus welcher Stadt kommt der Chaostreff Flensburg
-          e.V.?</label
+          >Captcha: Aus welcher Stadt kommt der <a href="https://chaostreff-flensburg.de/" target="_blank">Chaostreff Flensburg
+          e.V.?</a></label
         >
         <InputText id="captcha" v-model="proposal.captcha" />
       </div>
       <div class="field col">
         <Checkbox v-model="proposal.approval" :binary="true" />
-        Ich habe die Förderbedingungen gelesen und willige ein
+        Ich habe die <a href="https://ccs.chaostreff-flensburg.de/#stipendiumsbedingungen" target="_blank">Stipendiumsbedingungen</a> gelesen und willige ein
       </div>
       <Button type="submit" label="Abschicken" />
     </form>
