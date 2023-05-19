@@ -11,6 +11,12 @@ import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
 import { getProposalById } from "../../lib/api.js";
+import { useDialog } from "primevue/usedialog";
+import { store } from "../../lib/store.js";
+import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
+import lf from "localforage";
+
+const dialog = useDialog();
 
 const route = useRoute();
 const loading = ref(false);
@@ -25,6 +31,16 @@ const home = ref({
 });
 const items = ref([{ label: "Computer" }]);
 
+const getPrivateKey = () => new Promise((resolve, reject) => {
+  console.log(dialog);
+  dialog.open(PrivateKeyForm, {
+    onClose: ({ data = null }) => {
+      if (data?.privateKey) resolve(JSON.parse(data.privateKey));
+      else reject("no private key");
+    },
+  })
+});
+
 onMounted(async () => {
   loading.value = true;
   try {
@@ -35,6 +51,13 @@ onMounted(async () => {
       data: { session = null },
     } = await supabase.auth.getSession();
     currentUserId.value = session?.user?.id;
+
+    if (!store.encryption.privateKey) {
+      const privateKey = await getPrivateKey();
+      lf.setItem("encryption.privateKey", privateKey);
+      store.encryption.privateKey = privateKey;
+      console.log(store.encryption.privateKey);
+    }
 
     proposal.value = await getProposalById(proposalId.value);
     items.value[0].label = `${proposal.value.id} - ${proposal.value.thesis_name}`;
@@ -69,8 +92,7 @@ onMounted(async () => {
           <template #title>Bewerbung</template>
           <template #content>
             <article v-for="(value, name) in proposal.data" :key="name">
-              <span class="font-bold"
-                >{{ proposal_fields[name]?.de || name }}:
+              <span class="font-bold">{{ proposal_fields[name]?.de || name }}:
               </span>
               <span>{{ value }}</span>
             </article>
@@ -89,8 +111,7 @@ onMounted(async () => {
             <template #title>📝 {{ proposal.comments_count }} </template>
           </Card>
           <Card style="max-width: 240px; max-height: 120px">
-            <template #title
-              >Status: {{ status[proposal.status]?.name || proposal.status }}
+            <template #title>Status: {{ status[proposal.status]?.name || proposal.status }}
             </template>
           </Card>
         </div>
@@ -98,23 +119,15 @@ onMounted(async () => {
         <Card>
           <template #title>Deine Meinung </template>
           <template #content>
-            <OpinionForm
-              v-if="proposalId"
-              :proposal-id="route.params.id"
-              :my-opinion="myOpinion"
-              :current-user-id="currentUserId"
-            />
+            <OpinionForm v-if="proposalId" :proposal-id="route.params.id" :my-opinion="myOpinion"
+              :current-user-id="currentUserId" />
           </template>
         </Card>
 
         <h4>Alle Meinungen</h4>
-        <article
-          v-for="opinion in proposal.opinions"
-          v-if="proposal.opinions?.length > 0"
-        >
+        <article v-for="opinion in proposal.opinions" v-if="proposal.opinions?.length > 0">
           <Card>
-            <template #title
-              >{{ opinion.special_vote || opinion.vote }}
+            <template #title>{{ opinion.special_vote || opinion.vote }}
               {{ opinion.profiles.username }}
             </template>
             <template #content>{{ opinion.comment }}</template>
@@ -123,11 +136,7 @@ onMounted(async () => {
         <div v-else>Sei die erste Person die eine Meinung abgibt</div>
 
         <h3>Status Ändern</h3>
-        <ProposalStatusForm
-          v-if="proposalId"
-          :proposal-id="route.params.id"
-          :proposal-status="proposal.status"
-        />
+        <ProposalStatusForm v-if="proposalId" :proposal-id="route.params.id" :proposal-status="proposal.status" />
       </div>
     </div>
   </template>

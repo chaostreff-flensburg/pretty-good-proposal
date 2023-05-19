@@ -2,6 +2,8 @@ import * as aes from "./webcrypto/aes.js";
 import * as rsa from "./webcrypto/rsa.js";
 import { randomString } from "./webcrypto/helpers.js";
 import { store } from "./store.js";
+import { useDialog } from "primevue/usedialog";
+import PrivateKeyForm from "../components/PrivateKeyForm.vue";
 
 const crypto = window.crypto;
 
@@ -53,6 +55,7 @@ const encryptProposalData = async (proposal) => {
 };
 
 const decryptProposalData = async (encryptedData, encryptedSymatricKey) => {
+  console.log("important", store.encryption.privateKey);
   const symatricKey = await rsa.decrypt(
     encryptedSymatricKey,
     await getPrivateKey(store.encryption.privateKey)

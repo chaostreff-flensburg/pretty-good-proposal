@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import ToastService from "primevue/toastservice";
 import Tooltip from "primevue/tooltip";
 import ConfirmationService from "primevue/confirmationservice";
+import DialogService from "primevue/dialogservice";
 
 import "./style.css";
 import App from "./App.vue";
@@ -18,6 +19,7 @@ const app = createApp(App);
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+app.use(DialogService);
 app.directive("tooltip", Tooltip);
 app.use(ConfirmationService);
 app.mount("#app");
