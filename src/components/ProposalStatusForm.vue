@@ -30,30 +30,6 @@ onMounted(() => {
   statusForm.value = proposalStatus;
 });
 
-const confirm1 = () => {
-  confirm.require({
-    message: "Are you sure you want to proceed?",
-    header: "Confirmation",
-    icon: "pi pi-exclamation-triangle",
-    accept: () => {
-      toast.add({
-        severity: "info",
-        summary: "Confirmed",
-        detail: "You have accepted",
-        life: 3000,
-      });
-    },
-    reject: () => {
-      toast.add({
-        severity: "error",
-        summary: "Rejected",
-        detail: "You have rejected",
-        life: 3000,
-      });
-    },
-  });
-};
-
 const updateProposalStatus = async () => {
   loading.value = true;
   try {
