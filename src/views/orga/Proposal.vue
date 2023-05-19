@@ -32,7 +32,6 @@ const home = ref({
 const items = ref([{ label: "Computer" }]);
 
 const getPrivateKey = () => new Promise((resolve, reject) => {
-  console.log(dialog);
   dialog.open(PrivateKeyForm, {
     onClose: ({ data = null }) => {
       if (data?.privateKey) resolve(JSON.parse(data.privateKey));
@@ -56,7 +55,6 @@ onMounted(async () => {
       const privateKey = await getPrivateKey();
       lf.setItem("encryption.privateKey", privateKey);
       store.encryption.privateKey = privateKey;
-      console.log(store.encryption.privateKey);
     }
 
     proposal.value = await getProposalById(proposalId.value);

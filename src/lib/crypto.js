@@ -55,7 +55,6 @@ const encryptProposalData = async (proposal) => {
 };
 
 const decryptProposalData = async (encryptedData, encryptedSymatricKey) => {
-  console.log("important", store.encryption.privateKey);
   const symatricKey = await rsa.decrypt(
     encryptedSymatricKey,
     await getPrivateKey(store.encryption.privateKey)

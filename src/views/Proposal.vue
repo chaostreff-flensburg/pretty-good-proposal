@@ -50,8 +50,6 @@ if (!import.meta.env.PROD) {
 }
 const onSubmit = async () => {
   loading.value = true
-  console.log('proposal.value', proposal.value)
-  console.log('loading.value', loading.value)
   try {
     if (proposal.value.captcha.toLowerCase() !== "flensburg")
       throw Error("Wrong Captcha");

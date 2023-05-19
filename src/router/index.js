@@ -72,9 +72,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const { data } = await supabase.auth.getSession();
   const currentUser = data.session?.user;
-  console.log(currentUser);
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  console.log(requiresAuth);
   if (requiresAuth && !currentUser) next("/login");
   //else if(!requiresAuth && currentUser) next("/orga");
   else next();

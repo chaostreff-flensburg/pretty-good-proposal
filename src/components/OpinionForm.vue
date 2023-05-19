@@ -35,7 +35,6 @@ onMounted(() => {
 const onSubmit = handleSubmit(async (values, actions) => {
   loading.value = true;
   try {
-    console.log("opinionForm", opinionForm.value);
     opinionForm.value = {
       ...opinionForm.value,
       profile_id: currentUserId,
@@ -63,15 +62,8 @@ const onSubmit = handleSubmit(async (values, actions) => {
   <form @submit="onSubmit">
     <div class="flex-auto">
       <label for="vote" class="font-bold block mb-2"> Integer Only </label>
-      <InputNumber
-        v-model="opinionForm.vote"
-        :min-fraction-digits="1"
-        :step="0.1"
-        :min="-1"
-        :max="1"
-        locale="de-DE"
-        input-id="vote"
-      />
+      <InputNumber v-model="opinionForm.vote" :min-fraction-digits="1" :step="0.1" :min="-1" :max="1" locale="de-DE"
+        input-id="vote" />
     </div>
     <div class="flex-auto">
       <label for="comment" class="font-bold block mb-2">Kommentar</label>
