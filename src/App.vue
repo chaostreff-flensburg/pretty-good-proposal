@@ -10,5 +10,6 @@
 <style scoped>
 main {
   min-height: calc(100vh - 90px);
+  max-width: 1000px;
 }
 </style>
