@@ -39,11 +39,13 @@ const loadPoposals = async () => {
         status: status[proposal.status]?.name || proposal.status,
       };
     });
+    const {
+      data: { session = null },
+    } = await supabase.auth.getSession();
     data = data.map((proposal) => {
       proposal.created_at = dayjs(proposal.created_at).format(
         "DD.MM.YYYY HH:MM"
       );
-      if (proposal.opinions.length === 0) return proposal;
       const vote_average = proposal.opinions.reduce(
         (accumulator, currentValue) => accumulator + currentValue.vote,
         0
@@ -54,11 +56,24 @@ const loadPoposals = async () => {
       const vote_count = proposal.opinions.filter(
         (opinion) => !!opinion.vote
       ).length;
+      //----------
+      const max_vote_count = 6 // TODO: Other way: config or derived from list of voting users
+      let vote_status = 'vote_completed'
+      if (vote_count !== max_vote_count) {
+        if (proposal.opinions.find(
+          (opinion) => opinion.profile_id === session?.user?.id
+        )) {
+          vote_status = 'others_need_to_vote'
+        } else {
+          vote_status = 'user_need_to_vote'
+        }
+      }
       return {
         ...proposal,
         vote_count,
         vote_average,
         comments_count,
+        vote_status
       };
     });
     proposals.value = data;
@@ -84,6 +99,13 @@ const onRowSelect = (event) => {
     },
   });
 };
+const rowClass = (data) => {
+  return [
+    { 'bg-red-200': data.vote_status === 'user_need_to_vote' },
+    { 'bg-blue-200': data.vote_status === 'others_need_to_vote' },
+    { 'bg-green-200': data.vote_status === 'vote_completed' }
+  ];
+};
 </script>
 <template>
   <Toast />
@@ -98,73 +120,34 @@ const onRowSelect = (event) => {
       </div>
     </div>
   </div>
+  <div class="grid">
+    <div class="col mt-1 mb-2">
+      Legende: <span class="bg-red-200 m-1">Rot: Du musst noch abstimmen</span>
+      <span class="bg-blue-200 m-1">Blau: Andere müssen noch abstimmen</span>
+      <span class="bg-green-200 m-1">Grün: Alle haben abgestimmt</span>
+    </div>
+  </div>
   <template v-if="loading">
     <ProgressSpinner />
   </template>
   <template v-else>
-    <DataTable
-      :value="proposals"
-      striped-rows
-      show-gridlines
-      selection-mode="single"
-      data-key="id"
-      table-style="min-width: 50rem"
-      @rowSelect="onRowSelect"
-    >
-      <Column
-        v-tooltip="'ID wird vom System vergeben'"
-        field="id"
-        header="ID"
-        sortable
-        style="width: 8%"
-      ></Column>
-      <Column
-        field="thesis_name"
-        header="Name"
-        sortable
-        style="width: 60%"
-      ></Column>
-      <Column
-        field="status"
-        header="Status"
-        sortable
-        style="width: 8%"
-      ></Column>
-      <Column
-        v-tooltip="'Anzahl abgegebene Stimmen'"
-        field="vote_count"
-        header="👥"
-        sortable
-        style="width: 8%"
-      >
+    <DataTable :value="proposals" :rowClass="rowClass" striped-rows show-gridlines selection-mode="single" data-key="id"
+      table-style="min-width: 50rem" @rowSelect="onRowSelect">
+      <Column v-tooltip="'ID wird vom System vergeben'" field="id" header="ID" sortable style="width: 8%"></Column>
+      <Column field="thesis_name" header="Name" sortable style="width: 60%"></Column>
+      <Column field="status" header="Status" sortable style="width: 8%"></Column>
+      <Column v-tooltip="'Anzahl abgegebene Stimmen'" field="vote_count" header="👥" sortable style="width: 8%">
       </Column>
-      <Column
-        v-tooltip="'Durchschnittswert abgegebene Stimmen'"
-        field="vote_average"
-        header="🗳️"
-        sortable
-        style="width: 8%"
-      ></Column>
-      <Column
-        v-tooltip="'Anzahl Kommentare'"
-        field="comments_count"
-        header="📝"
-        sortable
-        style="width: 8%"
-      ></Column>
-      <Column
-        field="created_at"
-        header="🕰️"
-        sortable
-        style="width: 8%"
-      ></Column>
+      <Column v-tooltip="'Durchschnittswert abgegebene Stimmen'" field="vote_average" header="🗳️" sortable
+        style="width: 8%"></Column>
+      <Column v-tooltip="'Anzahl Kommentare'" field="comments_count" header="📝" sortable style="width: 8%"></Column>
+      <Column field="created_at" header="🕰️" sortable style="width: 8%"></Column>
     </DataTable>
     <Accordion class="mt-2">
       <AccordionTab header="🤓 Entwickly Informationen">
         <pre>
                     {{ proposals }}
-                </pre
-        >
+                </pre>
       </AccordionTab>
     </Accordion>
   </template>
