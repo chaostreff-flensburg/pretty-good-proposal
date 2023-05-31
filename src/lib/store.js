@@ -5,3 +5,7 @@ export const store = {
     privateKey: await lf.getItem("encryption.privateKey"),
   },
 };
+
+export const clearStore = async () => {
+  await lf.clear()
+}

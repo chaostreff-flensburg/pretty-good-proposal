@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted } from "vue";
 import { supabase } from "../supabase";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";

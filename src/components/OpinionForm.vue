@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted } from "vue";
 import { supabase } from "../supabase";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
@@ -61,7 +61,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
   <ProgressSpinner v-if="loading" />
   <form @submit="onSubmit">
     <div class="flex-auto">
-      <label for="vote" class="font-bold block mb-2"> Integer Only </label>
+      <label for="vote" class="font-bold block mb-2"> Deine Stimme (-1 bis +1) </label>
       <InputNumber v-model="opinionForm.vote" :min-fraction-digits="1" :step="0.1" :min="-1" :max="1" locale="de-DE"
         input-id="vote" />
     </div>
