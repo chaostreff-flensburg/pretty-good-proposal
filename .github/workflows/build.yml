@@ -36,3 +36,6 @@ jobs:
           file: Dockerfile
           push: true
           tags: "ghcr.io/${{ github.repository }}:latest"
+          build-args: |
+            "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
+            "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}"
