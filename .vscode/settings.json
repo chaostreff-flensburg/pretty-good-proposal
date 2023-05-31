@@ -9,5 +9,13 @@
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "deno.enable": true,
+  "deno.enablePaths": [
+    "./supabase"
+  ],
+  "deno.unstable": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
   }
 }
