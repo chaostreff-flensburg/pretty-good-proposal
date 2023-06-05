@@ -1,4 +1,4 @@
-name: Build
+name: Build and deploy
 
 on:
   push:
@@ -39,3 +39,11 @@ jobs:
           build-args: |
             "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
             "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}"
+      
+      - name: pull and start new image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
+          script: cd ccs-proposal && docker compose pull && docker compose up -d
