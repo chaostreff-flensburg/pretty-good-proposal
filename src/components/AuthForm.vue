@@ -14,7 +14,7 @@ const { authModus } = defineProps({
 });
 
 const loading = ref(false);
-const email = ref("samuel.brinkmann@gmail.com");
+const email = ref("");
 const toast = useToast();
 
 const handleLogin = async () => {
@@ -23,7 +23,7 @@ const handleLogin = async () => {
         const { error } = await supabase.auth.signInWithOtp({
             email: email.value,
             options: {
-                emailRedirectTo: "http://localhost:5173/#/login?",
+                emailRedirectTo: (import.meta.env.DEV ? "http://localhost:5173/#/login?" : "https://bewerben.ccs.chaostreff-flensburg.de/#/login?"),
                 shouldCreateUser: (authModus === 'login' ? false : true),
             },
         });
@@ -31,7 +31,7 @@ const handleLogin = async () => {
         toast.add({
             severity: "success",
             summary: "📨",
-            detail: "Check your email for the login link!",
+            detail: "Prüfen Sie Ihre E-Mail auf den Anmeldelink!",
             life: 50000,
         });
     } catch (error) {
