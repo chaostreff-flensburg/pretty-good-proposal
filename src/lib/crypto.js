@@ -2,8 +2,6 @@ import * as aes from "./webcrypto/aes.js";
 import * as rsa from "./webcrypto/rsa.js";
 import { randomString } from "./webcrypto/helpers.js";
 import { store } from "./store.js";
-import { useDialog } from "primevue/usedialog";
-import PrivateKeyForm from "../components/PrivateKeyForm.vue";
 
 const crypto = window.crypto;
 
