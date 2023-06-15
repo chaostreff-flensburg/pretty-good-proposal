@@ -18,8 +18,8 @@ export const decrypt = async (cipher, privateKey) => {
   return dec.decode(decryptedBuff);
 };
 
-export const generateKeypair = () =>
-  crypto.subtle.generateKey(
+export const generateKeypair = async () =>
+  await crypto.subtle.generateKey(
     {
       name: "RSA-OAEP",
       modulusLength: 4096,

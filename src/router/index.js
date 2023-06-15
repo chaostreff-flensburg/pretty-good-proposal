@@ -3,13 +3,13 @@ import { supabase } from "../supabase";
 
 import Login from "../views/Login.vue";
 import SubmitProposal from "../views/Proposal.vue";
-// import Crypto from '../views/Crypto.vue'
 
 import Overview from "../views/orga/Overview.vue";
 import OrgaView from "../views/OrgaView.vue";
 import Proposal from "../views/orga/Proposal.vue";
 import Profile from "../views/orga/Profile.vue";
 import Faq from "../views/orga/Faq.vue";
+import Error from "../views/Error.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -65,6 +65,11 @@ const router = createRouter({
           },
         },
       ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: "error",
+      component: Error,
     },
   ],
 });

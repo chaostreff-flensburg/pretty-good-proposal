@@ -16,6 +16,6 @@ const privateKey = ref("");
         <Textarea id="key" v-model="privateKey" :rows="8" required />
       </div>
     </div>
-    <Button type="submit" label="Bestaetigen" />
+    <Button type="submit" label="Bestätigen" />
   </form>
 </template>

@@ -4,6 +4,7 @@ import { supabase } from "../supabase";
 import Toast from "primevue/toast";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import ProgressSpinner from "primevue/progressspinner";
 import { useToast } from "primevue/usetoast";
 
 const { authModus } = defineProps({
@@ -20,10 +21,12 @@ const toast = useToast();
 const handleLogin = async () => {
     try {
         loading.value = true;
+        const emailRedirectTo = (import.meta.env.DEV ? "http://localhost:5173/#/login" : "https://bewerben.ccs.chaostreff-flensburg.de/#/login?")
+        console.log('emailRedirectTo', emailRedirectTo)
         const { error } = await supabase.auth.signInWithOtp({
             email: email.value,
             options: {
-                emailRedirectTo: (import.meta.env.DEV ? "http://localhost:5173/#/login?" : "https://bewerben.ccs.chaostreff-flensburg.de/#/login?"),
+                emailRedirectTo,
                 shouldCreateUser: (authModus === 'login' ? false : true),
             },
         });
@@ -34,6 +37,7 @@ const handleLogin = async () => {
             detail: "Prüfen Sie Ihre E-Mail auf den Anmeldelink!",
             life: 50000,
         });
+        email.value = ""
     } catch (error) {
         if (error instanceof Error) {
             toast.add({
@@ -50,6 +54,9 @@ const handleLogin = async () => {
 </script>
 <template>
     <Toast />
-    <InputText v-model="email" type="email" />
-    <Button :label="(authModus === 'login' ? 'Jetzt Anmelden' : 'Nutzer*in regestrieren')" @click="handleLogin" />
+
+    <InputText :autofocus="true" placeholder="E-Mail-Addresse" v-model="email" type="email" />
+    <Button :disabled="loading" :label="(authModus === 'login' ? 'Jetzt Anmelden' : 'Nutzer*in regestrieren')"
+        @click="handleLogin" />
+    <ProgressSpinner v-if="loading" />
 </template>

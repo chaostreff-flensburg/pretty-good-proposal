@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { supabase } from "../supabase";
-import { clearStore } from "../lib/store.js";
+import lf from "localforage";
 import Menubar from "primevue/menubar";
 import Button from "primevue/button";
 
@@ -11,7 +11,7 @@ const route = useRoute();
 const logout = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) console.error(error);
-  await clearStore()
+  await await lf.clear();
   router.push({
     name: "login",
   });

@@ -122,9 +122,9 @@ const rowClass = (data) => {
   </div>
   <div class="grid">
     <div class="col mt-1 mb-2">
-      Legende: <span class="bg-red-200 m-1">Rot: Du musst noch abstimmen</span>
-      <span class="bg-blue-200 m-1">Blau: Andere müssen noch abstimmen</span>
-      <span class="bg-green-200 m-1">Grün: Alle haben abgestimmt</span>
+      Legende: <span class="bg-red-200 m-1 p-1">Rot: Du musst noch abstimmen</span>
+      <span class="bg-blue-200 m-1 p-1">Blau: Andere müssen noch abstimmen</span>
+      <span class="bg-green-200 m-1 p-1">Grün: Alle haben abgestimmt</span>
     </div>
   </div>
   <template v-if="loading">
@@ -133,6 +133,7 @@ const rowClass = (data) => {
   <template v-else>
     <DataTable :value="proposals" :rowClass="rowClass" striped-rows show-gridlines selection-mode="single" data-key="id"
       table-style="min-width: 50rem" @rowSelect="onRowSelect">
+      <template #empty> Keine Bewerbungen mit diesem Filter gefunden. </template>
       <Column v-tooltip="'ID wird vom System vergeben'" field="id" header="ID" sortable style="width: 8%"></Column>
       <Column field="thesis_name" header="Name" sortable style="width: 60%"></Column>
       <Column field="status" header="Status" sortable style="width: 8%"></Column>

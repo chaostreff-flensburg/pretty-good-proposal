@@ -12,7 +12,6 @@ import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
 import { getProposalById } from "../../lib/api.js";
 import { useDialog } from "primevue/usedialog";
-import { store } from "../../lib/store.js";
 import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
 import lf from "localforage";
 
@@ -51,10 +50,10 @@ onMounted(async () => {
     } = await supabase.auth.getSession();
     currentUserId.value = session?.user?.id;
 
-    if (!store.encryption.privateKey) {
+    const storeEncryptionKey = await lf.getItem("encryption.privateKey")
+    if (!storeEncryptionKey) {
       const privateKey = await getPrivateKey();
       lf.setItem("encryption.privateKey", privateKey);
-      store.encryption.privateKey = privateKey;
     }
 
     proposal.value = await getProposalById(proposalId.value);
