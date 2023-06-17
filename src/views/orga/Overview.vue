@@ -54,7 +54,7 @@ const loadPoposals = async () => {
         (opinion) => !!opinion.comment && opinion.comment !== ""
       ).length;
       const vote_count = proposal.opinions.filter(
-        (opinion) => !!opinion.vote
+        (opinion) => opinion.vote !== null
       ).length;
       //----------
       const max_vote_count = 6 // TODO: Other way: config or derived from list of voting users

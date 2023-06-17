@@ -34,7 +34,7 @@ const getPrivateKey = () => new Promise((resolve, reject) => {
   dialog.open(PrivateKeyForm, {
     onClose: ({ data = null }) => {
       if (data?.privateKey) resolve(JSON.parse(data.privateKey));
-      else reject("no private key");
+      else reject("Kein Private Key Vorhanden");
     },
   })
 });

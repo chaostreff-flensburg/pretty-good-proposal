@@ -8,5 +8,5 @@ export const fromProposal = (raw) => ({
   comments_count: raw.opinions.filter(
     (opinion) => !!opinion.comment && opinion.comment !== ""
   ).length,
-  vote_count: raw.opinions.filter((opinion) => !!opinion.vote).length,
+  vote_count: raw.opinions.filter((opinion) => opinion.vote !== null).length,
 });
