@@ -62,12 +62,12 @@ const onSubmit = handleSubmit(async (values, actions) => {
   <form @submit="onSubmit">
     <div class="flex-auto">
       <label for="vote" class="font-bold block mb-2"> Deine Stimme (-1 bis +1) </label>
-      <InputNumber v-model="opinionForm.vote" :min-fraction-digits="1" :step="0.1" :min="-1" :max="1" locale="de-DE"
-        input-id="vote" />
+      <InputNumber class="w-full" v-model="opinionForm.vote" :min-fraction-digits="1" :step="0.1" :min="-1" :max="1"
+        locale="de-DE" input-id="vote" />
     </div>
     <div class="flex-auto">
       <label for="comment" class="font-bold block mb-2">Kommentar</label>
-      <Textarea id="comment" v-model="opinionForm.comment" />
+      <Textarea class="w-full" id="comment" v-model="opinionForm.comment" />
     </div>
     <Button type="submit" label="Speichern" />
   </form>

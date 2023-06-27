@@ -7,6 +7,8 @@ import { status, proposal_fields } from "../../lib/const";
 import OpinionForm from "../../components/OpinionForm.vue";
 import ProposalStatusForm from "../../components/ProposalStatusForm.vue";
 import ProgressSpinner from "primevue/progressspinner";
+import Textarea from "primevue/textarea";
+import TextInput from "primevue/inputtext";
 import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
@@ -95,16 +97,35 @@ onMounted(async () => {
             </article>
           </template>
         </Card>
+        <hr />
+        <template v-if="proposal.status === 'rejected'">
+          <h2>E-Mail Texte Ablehnung</h2>
+          <div class="flex-auto">
+            <label>E-Mail Betreff</label>
+            <TextInput class="w-full" :modelValue="`CCS Bewerbung '${proposal.thesis_name}'`" />
+          </div>
+          <div class="flex-auto mt-2">
+            <label>E-Mail Inhalt</label>
+            <Textarea class="w-full" rows="10"
+              :modelValue="`Moin,
+vielen Dank für deine Bewerbung.
+
+Wir als Beirat haben uns entschieden, deine Masterarbeit nicht zu fördern.
+
+Wir wünschen dir dennoch viel Erfolg mit deiner Arbeit!
+Wenn du Interesse hast, deine Arbeit im Umfeld des Chaos Computer Clubs zu veröffentlichen, kannst du dich gerne bei uns melden.`" />
+          </div>
+        </template>
       </div>
       <div class="col">
-        <div class="flex">
-          <Card style="max-width: 60px; max-height: 120px">
+        <div class="flex mt-1">
+          <Card class="mr-1" style="max-width: 60px; max-height: 120px">
             <template #title>🗳️ {{ proposal.vote_average }} </template>
           </Card>
-          <Card style="max-width: 60px; max-height: 120px">
+          <Card class="mr-1" style="max-width: 60px; max-height: 120px">
             <template #title>👥 {{ proposal.vote_count }} </template>
           </Card>
-          <Card style="max-width: 60px; max-height: 120px">
+          <Card class="mr-1" style="max-width: 60px; max-height: 120px">
             <template #title>📝 {{ proposal.comments_count }} </template>
           </Card>
           <Card style="max-width: 240px; max-height: 120px">
@@ -123,7 +144,7 @@ onMounted(async () => {
 
         <h4>Alle Meinungen</h4>
         <article v-for="opinion in proposal.opinions" v-if="proposal.opinions?.length > 0">
-          <Card>
+          <Card class="mt-1">
             <template #title>{{ opinion.special_vote || opinion.vote }}
               {{ opinion.profiles.username }}
             </template>
