@@ -69,6 +69,6 @@ const onSubmit = handleSubmit(async (values, actions) => {
       <label for="comment" class="font-bold block mb-2">Kommentar</label>
       <Textarea class="w-full" id="comment" v-model="opinionForm.comment" />
     </div>
-    <Button type="submit" label="Speichern" />
+    <Button :disabled="loading" type="submit" label="Speichern" />
   </form>
 </template>
