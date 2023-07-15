@@ -60,6 +60,10 @@ const getNotificationsForProposals = async () => {
             user.id,
           )
         ) {
+          proposal = {
+            ...proposal,
+            thesis_name: proposal.thesis_name.replace(/[^\x00-\x7F]/g, ""),
+          };
           notifcations.push({
             email_address: user.email,
             thesis_name: proposal.thesis_name,
