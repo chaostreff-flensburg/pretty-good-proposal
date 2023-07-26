@@ -91,8 +91,8 @@ const onSubmit = async () => {
                   <InputText id="username" v-model="proposal.name" required />
                 </div>
                 <div class="field col flex flex-column">
-                  <label for="pronoun">Pronomen (optional)</label>
-                  <InputText id="pronoun" v-model="proposal.pronoun" required />
+                  <label for="pronoun">{{ text.pronoun }}</label>
+                  <InputText id="pronoun" v-model="proposal.pronoun" />
                 </div>
               </div>
               <div class="formgrid grid ">
