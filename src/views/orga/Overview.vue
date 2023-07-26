@@ -121,10 +121,16 @@ const rowClass = (data) => {
     </div>
   </div>
   <div class="grid">
-    <div class="col mt-1 mb-2">
+    <div class="col-12 mt-1">
       Legende: <span class="bg-red-200 m-1 p-1">Rot: Du musst noch abstimmen</span>
       <span class="bg-blue-200 m-1 p-1">Blau: Andere müssen noch abstimmen</span>
       <span class="bg-green-200 m-1 p-1">Grün: Alle haben abgestimmt</span>
+      <span>Anzahl angezeigter Bewerbungen {{ proposals.length }}</span>
+    </div>
+    <div class="col-12 mb-2">
+      👥 = Anzahl abgegebene Stimmen |
+      🗳️ = zusammengezählte stimmen |
+      📝 = Anzahl Kommentare
     </div>
   </div>
   <template v-if="loading">
