@@ -8,6 +8,7 @@ import Checkbox from "primevue/checkbox";
 import Card from 'primevue/card';
 import ProgressSpinner from "primevue/progressspinner";
 import Message from 'primevue/message';
+import i18n from "../lib/i18n.json"
 
 const proposal = ref({
   name: "",
@@ -26,6 +27,12 @@ const proposal = ref({
 });
 const loading = ref(false)
 const formSubmitStatus = ref('edit')
+
+let text = i18n.de
+const browserLanguage = navigator.language || navigator.userLanguage;
+if (!browserLanguage.includes('de')) {
+  text = i18n.en
+}
 
 if (!import.meta.env.PROD) {
   proposal.value = {
@@ -67,22 +74,20 @@ const onSubmit = async () => {
 <template>
   <main>
     <Card>
-      <template #title> Jetzt Bewerben </template>
-      <template #subtitle> <a href="https://ccs.chaostreff-flensburg.de/" target="_blank">Alle Informationen zum #CCS
-          Chaotischer
-          Catalysator Stipendien</a> </template>
+      <template #title>{{ text.cta }}</template>
+      <template #subtitle> <a href="https://ccs.chaostreff-flensburg.de/" target="_blank">{{ text.linkText }}</a>
+      </template>
       <template #content>
         <template v-if="loading">
           <ProgressSpinner />
-          Wir speichern deine Bewerbung.<br />
-          Das kann ein paar Sekunden dauern.
+          {{ text.saveMessage }}
         </template>
         <template v-else>
           <template v-if="formSubmitStatus === 'edit'">
             <form @submit.prevent="onSubmit">
               <div class="formgrid grid ">
                 <div class="field col flex flex-column">
-                  <label for="username">Name</label>
+                  <label for="username">{{ text.username }}</label>
                   <InputText id="username" v-model="proposal.name" required />
                 </div>
                 <div class="field col flex flex-column">
@@ -92,73 +97,70 @@ const onSubmit = async () => {
               </div>
               <div class="formgrid grid ">
                 <div class="field col flex flex-column">
-                  <label for="email">E-Mail-Adresse</label>
+                  <label for="email">{{ text.email }}</label>
                   <InputText id="email" v-model="proposal.email" required />
                 </div>
                 <div class="field col flex flex-column">
-                  <label for="phonenumber">Telefonnummer (optional)</label>
+                  <label for="phonenumber">{{ text.phonenumber }}</label>
                   <InputText id="phonenumber" v-model="proposal.phonenumber" aria-describedby="phonenumber-help" />
-                  <small id="phonenumber-help">bitte leerlassen wenn nur per E-Mail kommuniziert werden soll</small>
+                  <small id="phonenumber-help">{{ text.phonenumber_help }}</small>
                 </div>
               </div>
               <div class="formgrid grid">
                 <div class="field col flex flex-column">
-                  <label for="hochschule">Hochschule/Universität</label>
+                  <label for="hochschule">{{ text.hochschule }}</label>
                   <InputText id="hochschule" v-model="proposal.hochschule" required />
                 </div>
                 <div class="field col flex flex-column">
-                  <label for="startdate">(geplantes) Startdatum</label>
+                  <label for="startdate">{{ text.startdate }}</label>
                   <InputText id="startdate" v-model="proposal.startdate" required />
                 </div>
               </div>
               <div class="field flex flex-column">
-                <label for="thesisName">Titel der Masterarbeit</label>
+                <label for="thesisName">{{ text.thesisName }}</label>
                 <InputText id="thesisName" v-model="proposal.thesisName" required />
               </div>
               <div class="field flex flex-column">
-                <label for="institutProfessor">Institut/Professur (optional)</label>
+                <label for="institutProfessor">{{ text.institutProfessor }}</label>
                 <InputText id="institutProfessor" v-model="proposal.institutProfessor" />
               </div>
               <div class="field flex flex-column">
-                <label for="thesisTask">Wie ist die Aufgabenstellung deiner Arbeit? max. 1000 Zeichen</label>
+                <label for="thesisTask">{{ text.thesisTask }}</label>
                 <Textarea v-model="proposal.thesisTask" rows="5" max="1000" required />
               </div>
               <div class="field flex flex-column">
                 <label for="reasonApplicationThesis">
-                  Warum passt deine Arbeit ins Thema? max. 1000 Zeichen</label>
+                  {{ text.reasonApplicationThesis }}
+                </label>
                 <Textarea v-model="proposal.reasonApplicationThesis" rows="7" max="1000" required />
               </div>
               <div class="field flex flex-column">
-                <label for="reasonApplicationPerson">Erzähl uns etwas über dich? max. 1000 Zeichen</label>
+                <label for="reasonApplicationPerson">{{ text.reasonApplicationPerson }}</label>
                 <Textarea v-model="proposal.reasonApplicationPerson" rows="7" max="1000" required />
               </div>
               <div class="field flex flex-column">
-                <label for="captcha">Captcha: Aus welcher Stadt kommt der <a href="https://chaostreff-flensburg.de/"
-                    target="_blank">Chaostreff Flensburg
+                <label for="captcha">{{ text.captcha }} <a href="https://chaostreff-flensburg.de/" target="_blank">{{
+                  text.captahCity }}
                     e.V.?</a></label>
                 <InputText id="captcha" v-model="proposal.captcha" required />
               </div>
               <div class="field">
                 <Checkbox v-model="proposal.approval" :binary="true" required />
-                Ich habe die <a href="https://ccs.chaostreff-flensburg.de/#stipendiumsbedingungen"
-                  target="_blank">Stipendiumsbedingungen</a> gelesen und willige ein
+                <a href="https://ccs.chaostreff-flensburg.de/#stipendiumsbedingungen" target="_blank">
+                  {{ text.approval }}
+                </a>
               </div>
-              <Button type="submit" :disabled="proposal.captcha.toLowerCase() !== 'flensburg'" label="Abschicken" />
+              <Button type="submit" :disabled="proposal.captcha.toLowerCase() !== 'flensburg'" :label="text.submit" />
             </form>
           </template>
           <template v-else-if="formSubmitStatus === 'success'">
             <Message :closable="false" severity="success">
-              🥳 Wir haben deine Bewerbung erfolgreich gespeichert. 🎉<br />
-              Es kann einige Wochen dauern, bis du eine Zu- oder Absage erhältst. Bei Fragen kannst du dich an
-              ccs@chaostreff-flensburg.de wenden.
+              {{ text.successMessage }}
             </Message>
           </template>
           <template v-else-if="formSubmitStatus === 'error'">
             <Message :closable="false" severity="error">
-              Deine Bewerbung konnte leider nicht gespeichert werden. Bitte überprüfe, ob du mit dem Internet verbunden
-              bist.<br />
-              Alternativ kannst du den untenstehenden Text kopieren und per E-Mail an
-              ccs@chaostreff-flensburg.de
+              {{ text.errorMessage }}
               senden.
             </Message>
             <Textarea :rows="5" :modelValue="JSON.stringify(proposal)" />
