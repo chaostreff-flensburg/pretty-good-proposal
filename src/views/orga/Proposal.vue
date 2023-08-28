@@ -7,8 +7,6 @@ import { status, proposal_fields } from "../../lib/const";
 import OpinionForm from "../../components/OpinionForm.vue";
 import ProposalStatusForm from "../../components/ProposalStatusForm.vue";
 import ProgressSpinner from "primevue/progressspinner";
-import Textarea from "primevue/textarea";
-import TextInput from "primevue/inputtext";
 import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
@@ -16,6 +14,7 @@ import { getProposalById } from "../../lib/api.js";
 import { useDialog } from "primevue/usedialog";
 import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
 import lf from "localforage";
+import EasyProposalCommunication from "../../components/EasyProposalCommunication.vue";
 
 const dialog = useDialog();
 
@@ -98,24 +97,7 @@ onMounted(async () => {
           </template>
         </Card>
         <hr />
-        <template v-if="proposal.status === 'rejected'">
-          <h2>E-Mail Texte Ablehnung</h2>
-          <div class="flex-auto">
-            <label>E-Mail Betreff</label>
-            <TextInput class="w-full" :modelValue="`CCS Bewerbung '${proposal.thesis_name}'`" />
-          </div>
-          <div class="flex-auto mt-2">
-            <label>E-Mail Inhalt</label>
-            <Textarea class="w-full" rows="10"
-              :modelValue="`Moin,
-vielen Dank für deine Bewerbung.
-
-Wir als Beirat haben uns entschieden, deine Masterarbeit nicht zu fördern.
-
-Wir wünschen dir dennoch viel Erfolg mit deiner Arbeit!
-Wenn du Interesse hast, deine Arbeit im Umfeld des Chaos Computer Clubs zu veröffentlichen, kannst du dich gerne bei uns melden.`" />
-          </div>
-        </template>
+        <EasyProposalCommunication v-if="proposal.status != 'created'" :proposal="proposal" />
       </div>
       <div class="col">
         <div class="flex mt-1">
