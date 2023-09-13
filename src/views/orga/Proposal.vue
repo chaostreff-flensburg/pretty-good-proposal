@@ -102,16 +102,16 @@ onMounted(async () => {
       <div class="col">
         <div class="flex mt-1">
           <Card class="mr-1" style="max-width: 60px; max-height: 120px">
-            <template #title>🗳️ {{ proposal.vote_average }} </template>
+            <template #content>🗳️ {{ proposal.vote_average }} </template>
           </Card>
           <Card class="mr-1" style="max-width: 60px; max-height: 120px">
-            <template #title>👥 {{ proposal.vote_count }} </template>
+            <template #content>👥 {{ proposal.vote_count }} </template>
           </Card>
           <Card class="mr-1" style="max-width: 60px; max-height: 120px">
-            <template #title>📝 {{ proposal.comments_count }} </template>
+            <template #content>📝 {{ proposal.comments_count }} </template>
           </Card>
           <Card style="max-width: 240px; max-height: 120px">
-            <template #title>Status: {{ status[proposal.status]?.name || proposal.status }}
+            <template #content>Status: {{ status[proposal.status]?.name || proposal.status }}
             </template>
           </Card>
         </div>

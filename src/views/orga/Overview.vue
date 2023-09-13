@@ -47,7 +47,7 @@ const loadPoposals = async () => {
         "DD.MM.YYYY HH:MM"
       );
       const vote_average = proposal.opinions.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.vote,
+        (accumulator, currentValue) => (parseFloat(accumulator) + parseFloat(currentValue.vote)).toFixed(2),
         0
       );
       const comments_count = proposal.opinions.filter(

@@ -2,7 +2,7 @@ export const fromProposal = (raw) => ({
   ...raw,
   label: `${raw.id} - ${raw.thesis_name}`,
   vote_average: raw.opinions.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.vote,
+    (accumulator, currentValue) => (parseFloat(accumulator) + parseFloat(currentValue.vote)).toFixed(2),
     0
   ),
   comments_count: raw.opinions.filter(
