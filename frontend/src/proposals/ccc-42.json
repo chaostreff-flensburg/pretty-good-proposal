@@ -1,0 +1,243 @@
+{
+    "title": {
+        "de": "Förderung für künstlerische Projekte",
+        "en": "Funding for artistic projects"
+    },
+    "deadline": 1709246562,
+    "description": {
+        "de": "Lorem Ipsum// 1709246562,",
+        "en": "Lorem Ipsum"
+    },
+    "submit": {
+        "de": "Abschicken",
+        "en": "Submit"
+    },
+    "successMessage": {
+        "de": "Deine Bewerbung wurde erfolgreich abgeschickt. Wir werden uns in den nächsten Wochen bei dir melden.",
+        "en": "Your application has been successfully submitted. We will contact you in the next few weeks."
+    },
+    "errorMessage": {
+        "de": "Deine Bewerbung konnte nicht abgeschickt werden. Bitte versuche es später noch einmal.",
+        "en": "Your application could not be submitted. Please try again later."
+    },
+    "saveMessage": {
+        "de": "Deine Bewerbung wurde erfolgreich gespeichert.",
+        "en": "Your application has been saved successfully."
+    },
+    "maxLength": {
+        "de": "Maximale Zeichen: ",
+        "en": "Max character: "
+    },
+    "fields": [
+        {
+            "key": "title",
+            "label": {
+                "de": "Arbeitstitel",
+                "en": "Title"
+            },
+            "type": "input",
+            "max": 72,
+            "required": false
+        },
+        {
+            "key": "short_description",
+            "label": {
+                "de": "Kurz Beschreibung",
+                "en": "Short description"
+            },
+            "type": "textarea",
+            "max": 140,
+            "rows": 2,
+            "required": false
+        },
+        {
+            "key": "description",
+            "label": {
+                "de": "Wie stellst du dir das Projekt vor?",
+                "en": "How do you imagine the project?"
+            },
+            "type": "textarea",
+            "max": 1337,
+            "required": false
+        },
+        {
+            "key": "why",
+            "label": {
+                "de": "Warum passt die Bewerbung ins Thema (CCC Utopien und Visionen)?",
+                "en": "Why does the application fit the topic (CCC Utopias and Visions)?"
+            },
+            "type": "textarea",
+            "max": 1337,
+            "required": false
+        },
+        {
+            "key": "type",
+            "label": {
+                "de": "Sparte",
+                "en": "Type"
+            },
+            "type": "select",
+            "options": [
+                {
+                    "key": "text",
+                    "label": {
+                        "de": "Text",
+                        "en": "Text"
+                    }
+                },
+                {
+                    "key": "graphic",
+                    "label": {
+                        "de": "Grafik",
+                        "en": "Graphic"
+                    }
+                },
+                {
+                    "key": "video",
+                    "label": {
+                        "de": "Video",
+                        "en": "Video"
+                    }
+                },
+                {
+                    "key": "audio",
+                    "label": {
+                        "de": "Audio",
+                        "en": "Audio"
+                    }
+                },
+                {
+                    "key": "animation",
+                    "label": {
+                        "de": "Animation",
+                        "en": "Animation"
+                    }
+                },
+                {
+                    "key": "web",
+                    "label": {
+                        "de": "Webseite",
+                        "en": "Web"
+                    }
+                }
+            ],
+            "required": false
+        },
+        {
+            "key": "amount_min",
+            "label": {
+                "de": "Fördersumme minimum €",
+                "en": "Amount minimum €"
+            },
+            "type": "number",
+            "min": 420,
+            "max": 4200,
+            "required": false
+        },
+        {
+            "key": "amount_optimum",
+            "label": {
+                "de": "Fördersumme optimum €",
+                "en": "Amount optimum €"
+            },
+            "type": "number",
+            "min": 420,
+            "max": 4200,
+            "required": false
+        },
+        {
+            "key": "costs",
+            "label": {
+                "de": "Kosten Beschreibung (optional - wenn du nicht nur Arbeitszeit gefördert bekommen möchtest)",
+                "en": "Costs description (optional - if you don't want to get only working time funded)"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "participants",
+            "label": {
+                "de": "Projektteilnehmende",
+                "en": "Project participants"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "email",
+            "label": {
+                "de": "E-Mail Adresse Kontakt",
+                "en": "E-Mail address contact"
+            },
+            "type": "input",
+            "required": false
+        },
+        {
+            "key": "phone",
+            "label": {
+                "de": "Telefonnummer (optional)",
+                "en": "Phone number (optional)"
+            },
+            "type": "input",
+            "required": false
+        },
+        {
+            "key": "vita",
+            "label": {
+                "de": "Künstlerische Vita - Welche Projekte hast du schon gemacht? Wenn du noch keine küstlerische Projekte gemacht hast, kannst du dir hier auch andere Projekte benennen",
+                "en": "Artistic vita - Which projects have you already done? If you haven't done any artistic projects yet, you can also name other projects here"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "links",
+            "label": {
+                "de": "Linkliste (optional)",
+                "en": "Link list (optional)"
+            },
+            "type": "textarea",
+            "max": 4200,
+            "required": false
+        },
+        {
+            "key": "file",
+            "label": {
+                "de": "Beliebige Datei Bild/PDF mit weniger als 2mb (optional)",
+                "en": "Any file image/PDF with less than 2mb (optional)"
+            },
+            "type": "file",
+            "required": false
+        },
+        {
+            "key": "captcha",
+            "label": {
+                "de": "Captcha: Aus welcher Stadt kommt der Chaostreff Flensburg e.V.?",
+                "en": "Captcha: From which city does the the Chaostreff Flensburg e.V. comes from?"
+            },
+            "type": "input",
+            "required": true
+        },
+        {
+            "key": "approval",
+            "label": {
+                "de": "Ich habe die Förderbedingungen und den Zeitplan gelesen und verstanden",
+                "en": "I have read and understood the funding conditions and the schedule"
+            },
+            "type": "checkbox",
+            "required": true
+        }
+    ],
+    "linklist": [
+        {
+            "label": {
+                "de": "Förderbedinungen",
+                "en": "funding conditions"
+            },
+            "target": "https://42.ccc.de"
+        }
+    ]
+}
