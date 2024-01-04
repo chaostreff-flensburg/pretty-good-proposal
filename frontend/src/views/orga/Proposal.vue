@@ -1,16 +1,16 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { client, user } from "../../lib/api";
+import { getProposalById, user } from "../../lib/api";
+import { proposals } from '../../proposals/index.js'
 import { useRoute } from "vue-router";
 import { useToast } from "primevue/usetoast";
-import { status, proposal_fields } from "../../lib/const";
+import { status } from "../../lib/const";
 import OpinionForm from "../../components/OpinionForm.vue";
 import ProposalStatusForm from "../../components/ProposalStatusForm.vue";
 import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
-import { getProposalById } from "../../lib/api.js";
 import { useDialog } from "primevue/usedialog";
 import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
 import lf from "localforage";
@@ -30,6 +30,7 @@ const home = ref({
   to: "/orga",
 });
 const items = ref([{ label: "Computer" }]);
+const proposalData = ref(null);
 
 const getPrivateKey = () => new Promise((resolve, reject) => {
   dialog.open(PrivateKeyForm, {
@@ -55,7 +56,10 @@ onMounted(async () => {
     }
 
     proposal.value = await getProposalById(proposalId.value);
-    items.value[0].label = `${proposal.value.id} - ${proposal.value.thesis_name}`;
+    items.value[0].label = `${proposal.value.id} - ${proposal.value.name}`;
+    home.value.to = `/orga/track/${proposal.value.track.slug}`;
+
+    proposalData.value = proposals[proposal.value.track.slug];
 
     myOpinion.value = proposal.value.opinions.find(
       (opinion) => opinion.profile_id === currentUserId.value
@@ -72,6 +76,11 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+const fieldName = (name) => {
+  if (!proposalData.value) return name
+  const field = proposalData.value.fields.find((data) => data.key === name);
+  return field?.label.de || name;
+};
 </script>
 
 <template>
@@ -87,8 +96,9 @@ onMounted(async () => {
           <template #title>Bewerbung</template>
           <template #content>
             <article v-for="(value, name) in proposal.data" :key="name">
-              <span class="font-bold">{{ proposal_fields[name]?.de || name }}:
-              </span>
+              <div class="font-bold w-full">
+                {{ fieldName(name) || name }}:
+              </div>
               <span>{{ value }}</span>
             </article>
           </template>
