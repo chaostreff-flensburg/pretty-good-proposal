@@ -1,12 +1,11 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { setLogout } from '../lib/api'
 import lf from "localforage";
 import Menubar from "primevue/menubar";
 import Button from "primevue/button";
 
 const router = useRouter();
-const route = useRoute();
 
 const logout = async () => {
   await lf.clear();
@@ -34,7 +33,7 @@ const items = [
 <template>
   <header>
     <Menubar :model="items">
-      <template #start> #CCS Pretty Good Propopsal </template>
+      <template #start> Pretty Good Propopsal V2 </template>
       <template #end>
         <Button label="Logout" @click="logout" />
       </template>

@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function index(){
+        if (!Auth::check()){
+            abort(403);
+        }
+        if(Auth::user()->username != "root"){
+            abort(403);
+        }
+        return User::all();
+    }
+
     public function me(){
         if (!Auth::check()){
             abort(403);
@@ -29,6 +39,23 @@ class UserController extends Controller
         $user->save();
         return $user;
     }
+
+
+    public function create(Request $request){
+        if (!Auth::check()){
+            abort(403);
+        }
+        if(Auth::user()->username != "root"){
+            abort(403);
+        }
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return $user;
+    }
+
     public function updatePassword(User $user, Request $request){
         if (!Auth::check()){
             abort(403);

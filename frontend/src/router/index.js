@@ -11,7 +11,7 @@ import Profile from "../views/orga/Profile.vue";
 import Faq from "../views/orga/Faq.vue";
 import Error from "../views/Error.vue";
 
-import RootTracks from '../views/orga/RootTracks.vue';
+import Root from '../views/orga/Root.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -75,9 +75,12 @@ const router = createRouter({
           },
         },
         {
-          path: "/root/tracks",
+          path: "/orga/root",
           name: "tracks",
-          component: RootTracks,
+          component: Root,
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },

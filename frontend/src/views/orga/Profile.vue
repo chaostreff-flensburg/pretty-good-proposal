@@ -73,7 +73,7 @@ loadUser()
       <InputText class="w-full" v-model="email" type="email" required />
     </div>
     <div class="field">
-      <label>Benutzer (andere Benutzer aus dem selben Track können diesen sehen)</label>
+      <label>Benutzername (andere Benutzer aus dem selben Track können diesen sehen)</label>
       <InputText class="w-full" v-model="username" type="text" required />
     </div>
     <Button :disabled="loading" type="submit" label="Speichern" />

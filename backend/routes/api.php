@@ -33,5 +33,7 @@ Route::get('proposal/{proposal}', [\App\Http\Controllers\ProposalController::cla
 
 
 Route::get('user', [\App\Http\Controllers\UserController::class, 'me']);
+Route::get('users', [\App\Http\Controllers\UserController::class, 'index']);
+Route::post('user', [\App\Http\Controllers\UserController::class, 'create']);
 Route::post('user/{user}', [\App\Http\Controllers\UserController::class, 'update']);
 Route::post('user/{user}/password', [\App\Http\Controllers\UserController::class, 'updatePassword']);
