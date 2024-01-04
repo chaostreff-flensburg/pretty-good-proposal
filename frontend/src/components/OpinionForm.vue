@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { supabase } from "../supabase";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
@@ -40,7 +39,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
       profile_id: currentUserId,
       proposal_id: proposalId,
     };
-    await supabase.from("opinions").upsert(opinionForm.value).throwOnError();
+    // TODO: Build API Call
     router.go();
   } catch (error) {
     console.error(error);

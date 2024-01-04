@@ -1,6 +1,5 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { supabase } from "../supabase";
 import lf from "localforage";
 import Menubar from "primevue/menubar";
 import Button from "primevue/button";
@@ -9,8 +8,7 @@ const router = useRouter();
 const route = useRoute();
 
 const logout = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) console.error(error);
+  //TODO: Build Logout
   await await lf.clear();
   router.push({
     name: "login",

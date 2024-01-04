@@ -9,7 +9,7 @@ volumes:
 
 services:
   backend:
-    image: ghcr.io/chaostreff-flensburg/simple-borrow:latest
+    image: ghcr.io/chaostreff-flensburg/pretty-good-proposal/backend:latest
     restart: always
     volumes:
       - storage:/var/www/html/storage
@@ -30,7 +30,7 @@ services:
         max-size: "10m"
 
   frontend:
-    image: ghcr.io/chaostreff-flensburg/simple-borrow:latest
+    image: ghcr.io/chaostreff-flensburg/pretty-good-proposal/frontend:latest
     restart: always
     labels:
       - "traefik.enable=true"

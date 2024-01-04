@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { supabase } from "../supabase";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
@@ -33,11 +32,7 @@ onMounted(() => {
 const updateProposalStatus = async () => {
   loading.value = true;
   try {
-    await supabase
-      .from("proposals")
-      .update({ status: statusForm.value })
-      .eq("id", proposalId)
-      .throwOnError();
+    // TODO: Build API Call
     router.go();
   } catch (error) {
     console.error(error);
