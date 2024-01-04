@@ -14,9 +14,6 @@ RUN apk add --no-cache \
 COPY ./ /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-dev --ignore-platform-req=ext-intl
-RUN npm ci
-RUN npm run build
-RUN rm -rf node_modules
 
 FROM unit:php8.2
 

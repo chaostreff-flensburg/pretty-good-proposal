@@ -3,7 +3,7 @@ FROM node:alpine as builder
 WORKDIR /app
 ADD . .
 # Needs to be set to the backend url
-ENV VITE_BACKEND_URL=https://bewerben.c3fl.de/api
+ENV VITE_BACKEND_URL=https://api.bewerben.c3fl.de
 
 RUN npm ci && npm run build
 
