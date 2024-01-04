@@ -88,6 +88,29 @@ const loadPoposals = async () => {
     loading.value = false;
   }
 };
+const exportTrackData = async () => {
+  loading.value = true;
+  try {
+    const response = await client.get(`track/export/?slug=${route.params.slug}`)
+    const data = JSON.stringify({ track: response.data })
+    const name = `${+new Date()}-${route.params.slug}.json`
+    const a = document.createElement('a');
+    const type = name.split(".").pop();
+    a.href = URL.createObjectURL(new Blob([data], { type: `text/${type === "txt" ? "plain" : type}` }));
+    a.download = name;
+    a.click();
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      severity: "warn",
+      summary: "Error",
+      detail: error?.message || "Beim laden ist ein Fehler aufgetrente",
+      life: 5000,
+    });
+  } finally {
+    loading.value = false;
+  }
+};
 const onRowSelect = (event) => {
   console.log(event);
   const { id } = event.data;
@@ -161,5 +184,7 @@ const rowClass = (data) => {
         Benutzer in diesem Track:
       </p><span v-for="user in trackUsers" :key="user.id">{{ user.username }}, </span>
     </section>
+
+    <Button label="💾 Alle Track Daten Exportieren" @click="exportTrackData" />
   </template>
 </template>

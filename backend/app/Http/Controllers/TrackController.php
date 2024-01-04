@@ -83,4 +83,18 @@ class TrackController extends Controller
             'users' => $track->users,
         ];
     }
+
+    public function exportTrackData (Request $request)
+    {
+        if (!Auth::check()){
+            abort(403);
+        }
+        $user = Auth::user();
+        $track = Track::where('slug', $request->slug)->with('users', 'proposals', 'proposals.opinions', 'proposals.opinions.user', )->firstOrFail();
+        if(!$track->users->contains($user->id)){
+            abort(403);
+        }
+        return $track;
+
+    }
 }

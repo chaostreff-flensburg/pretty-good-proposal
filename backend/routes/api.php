@@ -25,6 +25,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('tracks', [\App\Http\Controllers\TrackController::class, 'index']);
 Route::post('tracks', [\App\Http\Controllers\TrackController::class, 'create']);
 Route::get('track', [\App\Http\Controllers\TrackController::class, 'show']);
+Route::get('track/export', [\App\Http\Controllers\TrackController::class, 'exportTrackData']);
 Route::get('track/proposals', [\App\Http\Controllers\TrackController::class, 'proposals']);
 Route::post('track/users', [\App\Http\Controllers\TrackController::class, 'addUserToTrack']);
 
