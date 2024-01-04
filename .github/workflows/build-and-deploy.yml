@@ -32,7 +32,7 @@ jobs:
       - name: Build Frontend
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: frontend
           file: frontend/Dockerfile
           push: true
           tags: "ghcr.io/${{ github.repository }}/frontend:latest"
@@ -40,7 +40,7 @@ jobs:
       - name: Build Backend
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: backend
           file: backend/Dockerfile
           push: true
           tags: "ghcr.io/${{ github.repository }}/backend:latest"
