@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { client } from "../lib/api";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
@@ -39,8 +40,26 @@ const onSubmit = handleSubmit(async (values, actions) => {
       profile_id: currentUserId,
       proposal_id: proposalId,
     };
-    // TODO: Build API Call
-    router.go();
+    const response = await client.post(`proposal/${proposalId}/opinion`, {
+      vote: opinionForm.value.vote,
+      comment: opinionForm.value.comment,
+    });
+    if (response.status === 200 || response.status === 201) {
+      toast.add({
+        severity: "success",
+        summary: "Erfolgreich",
+        detail: "Deine Meinung wurde gespeichert",
+        life: 5000,
+      });
+      router.go();
+    } else {
+      toast.add({
+        severity: "warn",
+        summary: "Error",
+        detail: "Deine Meinung konnte nicht gespeichert werden",
+        life: 5000,
+      });
+    }
   } catch (error) {
     console.error(error);
     toast.add({

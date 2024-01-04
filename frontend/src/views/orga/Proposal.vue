@@ -135,7 +135,7 @@ const fieldName = (name) => {
         <article v-for="opinion in proposal.opinions" v-if="proposal.opinions?.length > 0">
           <Card class="mt-1">
             <template #title>{{ opinion.special_vote || opinion.vote }}
-              {{ opinion.profiles.username }}
+              {{ opinion.user?.username }}
             </template>
             <template #content>{{ opinion.comment }}</template>
           </Card>

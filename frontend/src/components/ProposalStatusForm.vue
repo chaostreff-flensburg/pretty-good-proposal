@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { client } from "../lib/api";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";

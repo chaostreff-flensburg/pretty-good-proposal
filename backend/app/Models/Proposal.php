@@ -14,7 +14,7 @@ class Proposal extends Model
 
     public function opinions(): HasMany
     {
-        return $this->hasMany(Opinions::class);
+        return $this->hasMany(Opinion::class);
     }
     public function track(): BelongsTo
     {
