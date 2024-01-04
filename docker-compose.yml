@@ -3,9 +3,11 @@ version: "3"
 networks:
   web:
     external: true
+  stack:
 
 volumes:
   storage:
+  database:
 
 services:
   backend:
@@ -15,14 +17,15 @@ services:
       - storage:/var/www/html/storage
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ausleihe.rule=Host(`api.bewerben.c3fl.de`)"
-      - "traefik.http.routers.ausleihe.entrypoints=https,http"
-      - "traefik.http.services.ausleihe.loadbalancer.server.port=80"
-      - "traefik.http.routers.ausleihe.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.api-pgp.rule=Host(`api.bewerbung.c3fl.de`)"
+      - "traefik.http.routers.api-pgp.entrypoints=https,http"
+      - "traefik.http.services.api-pgp.loadbalancer.server.port=80"
+      - "traefik.http.routers.api-pgp.tls.certresolver=mytlschallenge"
       - "traefik.docker.network=web"
-    working_dir: /var/www/html
+    working_dir: /app/public
     networks:
       - web
+      - stack
     env_file:
       - .env
     logging:
@@ -32,7 +35,7 @@ services:
   database:
     image: mysql:8.0
     volumes:
-      - mysql:/var/lib/mysql:cached
+      - database:/var/lib/mysql:cached
     networks:
       - stack
     ports:
@@ -51,10 +54,10 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ausleihe.rule=Host(`bewerben.c3fl.de`)"
-      - "traefik.http.routers.ausleihe.entrypoints=https,http"
-      - "traefik.http.services.ausleihe.loadbalancer.server.port=80"
-      - "traefik.http.routers.ausleihe.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.frontend-pgp.rule=Host(`bewerbung.c3fl.de`)"
+      - "traefik.http.routers.frontend-pgp.entrypoints=https,http"
+      - "traefik.http.services.frontend-pgp.loadbalancer.server.port=80"
+      - "traefik.http.routers.frontend-pgp.tls.certresolver=mytlschallenge"
       - "traefik.docker.network=web"
     networks:
       - web

@@ -14,7 +14,6 @@ RUN composer install --optimize-autoloader --no-interaction --no-dev --ignore-pl
 FROM dunglas/frankenphp
 
 RUN mkdir -p /var/www/html
-RUN mkdir -p /app/public/databasestore
 
 WORKDIR /app/public
 
