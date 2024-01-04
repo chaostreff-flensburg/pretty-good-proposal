@@ -29,6 +29,23 @@ services:
       options:
         max-size: "10m"
 
+  database:
+    image: mysql:8.0
+    volumes:
+      - mysql:/var/lib/mysql:cached
+    networks:
+      - stack
+    ports:
+      - 127.0.0.1:3306:3306
+    env_file:
+      - .env
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --sql_mode=''
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: always
+
   frontend:
     image: ghcr.io/chaostreff-flensburg/pretty-good-proposal/frontend:latest
     restart: always

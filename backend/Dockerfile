@@ -5,44 +5,35 @@ RUN mkdir -p /var/www/html/databasestore
 
 WORKDIR /var/www/html
 
-# Install Composer manually
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
-
-RUN apk add --no-cache \
-    npm
 
 COPY ./ /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-dev --ignore-platform-req=ext-intl
 
-FROM unit:php8.2
+FROM dunglas/frankenphp
 
 RUN mkdir -p /var/www/html
-RUN mkdir -p /var/www/html/databasestore
+RUN mkdir -p /app/public/databasestore
 
-WORKDIR /var/www/html
+WORKDIR /app/public
 
-COPY --from=build --chown=unit:unit /var/www/html /var/www/html
+COPY --from=build /var/www/html /app/public
 
 ENV TZ=Europe/Berlin
 
-# Update package lists and install required dependencies
-RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libfreetype6-dev \
-    sudo \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y netcat-traditional && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install and enable the intl and gd extensions
-RUN docker-php-ext-install intl gd
+RUN install-php-extensions \
+    pdo_mysql \
+    gd \
+    intl \
+    zip \
+    opcache
 
-COPY docker/config.json /docker-entrypoint.d/config.json
+RUN chmod +x /app/public/docker/entrypoint.sh
 
-COPY docker/entrypoint.sh /docker-entrypoint.d/entrypoint.sh
-
-RUN chmod +x /docker-entrypoint.d/entrypoint.sh
-
-EXPOSE 80
+ENTRYPOINT ["/app/public/docker/entrypoint.sh"]
+CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
