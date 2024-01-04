@@ -10,8 +10,8 @@ const router = useRouter();
 const route = useRoute();
 
 const loading = ref(false);
-const email = ref("root@chaostreff-flensburg.de");
-const password = ref("password");
+const email = ref(import.meta.env.PROD ? "" : "root@chaostreff-flensburg.de");
+const password = ref(import.meta.env.PROD ? "" : "password");
 
 const onSubmit = async () => {
   loading.value = true;
