@@ -20,6 +20,7 @@ const loading = ref(false);
 const proposals = ref([]);
 const toast = useToast();
 const proposalStatus = ref("created");
+const trackUsers = ref([]);
 
 onMounted(async () => {
   await loadPoposals();
@@ -31,7 +32,7 @@ const loadPoposals = async () => {
 
     const response = await client.get(`track/proposals?slug=${route.params.slug}`)
     let data = response.data.proposals
-    const trackUsers = response.data.users
+    trackUsers.value = response.data.users
 
     data = data.map((proposal) => {
       return {
@@ -55,7 +56,7 @@ const loadPoposals = async () => {
         (opinion) => opinion.vote !== null
       ).length;
       //----------
-      const max_vote_count = trackUsers.length
+      const max_vote_count = trackUsers.value.length
       let vote_status = 'vote_completed'
       if (vote_count !== max_vote_count) {
         if (proposal.opinions.find(
@@ -155,5 +156,10 @@ const rowClass = (data) => {
                 </pre>
       </AccordionTab>
     </Accordion>
+    <section>
+      <p>
+        Benutzer in diesem Track:
+      </p><span v-for="user in trackUsers" :key="user.id">{{ user.username }}, </span>
+    </section>
   </template>
 </template>
