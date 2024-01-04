@@ -30,7 +30,7 @@ const loadPoposals = async () => {
   loading.value = true;
   try {
 
-    const response = await client.get(`track/proposals?slug=${route.params.slug}`)
+    const response = await client.get(`track/proposals?slug=${route.params.slug}&proposalStatus=${proposalStatus.value}`)
     let data = response.data.proposals
     trackUsers.value = response.data.users
 

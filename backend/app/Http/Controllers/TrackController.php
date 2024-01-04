@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Track;
 use App\Models\User;
+use App\Models\Proposal;
 
 class TrackController extends Controller
 {
@@ -70,10 +71,16 @@ class TrackController extends Controller
             abort(403);
         }
         $user = Auth::user();
-        $track = Track::where('slug', $request->slug)->with('users', 'proposals', 'proposals.opinions')->firstOrFail();
+        $track = Track::where('slug', $request->slug)->with('users')->firstOrFail();
         if(!$track->users->contains($user->id)){
             abort(403);
         }
-        return $track->only('users', 'proposals');
+
+        $proposals = Proposal::where('track_id', $track->id)->where('status', $request->proposalStatus)->with('opinions', 'opinions.user')->get();
+
+        return [
+            'proposals' => $proposals,
+            'users' => $track->users,
+        ];
     }
 }
