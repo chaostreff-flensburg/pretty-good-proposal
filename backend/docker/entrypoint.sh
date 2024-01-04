@@ -1,12 +1,22 @@
 #!/bin/bash
 
-cd /var/www/html && mkdir -p storage/framework/{sessions,views,cache}
-cd /var/www/html && php artisan storage:link
-cd /var/www/html && php artisan optimize:clear
-cd /var/www/html && php artisan config:cache
-cd /var/www/html && php artisan route:cache
-cd /var/www/html && php artisan view:cache
-cd /var/www/html && php artisan event:cache
-cd /var/www/html && php artisan migrate --force
+ls -al
+
+mkdir -p storage/framework/{sessions,views,cache}
+php artisan storage:link
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+# Wait until db is online
+echo "Wait for DB to be ready"
+while ! nc -z database 3306; do
+    sleep 0.5
+    echo "Wait 0.5 seconds"
+done
+echo "DB is ready"
+sleep 1
+php artisan migrate --force
 
 exec "$@"
