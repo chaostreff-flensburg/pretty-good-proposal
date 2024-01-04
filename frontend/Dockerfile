@@ -2,12 +2,8 @@ FROM node:alpine as builder
 
 WORKDIR /app
 ADD . .
-
-ARG SUPABASE_URL
-ARG SUPABASE_ANON_KEY
-
-ENV VITE_SUPABASE_URL=$SUPABASE_URL
-ENV VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+# Needs to be set to the backend url
+ENV VITE_BACKEND_URL=https://bewerben.c3fl.de/api
 
 RUN npm ci && npm run build
 

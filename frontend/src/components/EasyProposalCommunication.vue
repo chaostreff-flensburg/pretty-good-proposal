@@ -13,6 +13,12 @@
 import { ref } from 'vue'
 import { newProposalStatusEmailTemplate } from '../lib/communication.js'
 
+const props = defineProps({
+    proposal: {
+        type: Object
+    }
+});
+
 const answer = ref({
     email: props?.proposal?.data?.email,
     de: {
@@ -25,9 +31,4 @@ const answer = ref({
         body: `${newProposalStatusEmailTemplate.en[props.proposal?.status]?.body}${newProposalStatusEmailTemplate.generalFooter}`.replaceAll(' ', '%20').replaceAll('\n', '%0A')
     }
 })
-const props = defineProps({
-    proposal: {
-        type: Object
-    }
-});
 </script>

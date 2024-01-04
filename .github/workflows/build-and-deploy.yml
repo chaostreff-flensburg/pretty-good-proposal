@@ -1,8 +1,8 @@
-name: Build and deploy
+name: Build and deploy V2
 
 on:
   push:
-    branches: ["main"]
+    branches: ["v2-customize-things"]
 
 concurrency:
   group: ${{ github.ref }}
@@ -36,10 +36,7 @@ jobs:
           file: Dockerfile
           push: true
           tags: "ghcr.io/${{ github.repository }}:latest"
-          build-args: |
-            "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
-            "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}"
-      
+
       - name: pull and start new image
         uses: appleboy/ssh-action@master
         with:

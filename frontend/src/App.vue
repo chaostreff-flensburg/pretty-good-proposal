@@ -1,7 +1,7 @@
 <template>
   <router-view :key="$route.fullPath"></router-view>
   <footer>
-    Das ist ein Projekt des
+    Die Software wird betrieben vom
     <a href="https://chaostreff-flensburg.de/">Chaostreff Flensburg e.V.</a> |
     <a href="https://chaostreff-flensburg.de/impressum/">Impressum</a> &
     <a href="https://chaostreff-flensburg.de/impressum/">Datenschutz</a>

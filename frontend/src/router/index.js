@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { supabase } from "../supabase";
-
+import { isLoggedIn, setLogin, user } from "../lib/api";
 import Login from "../views/Login.vue";
 import SubmitProposal from "../views/Proposal.vue";
+import ProposalsTrack from '../views/orga/ProposalsTrack.vue';
 
 import Overview from "../views/orga/Overview.vue";
 import OrgaView from "../views/OrgaView.vue";
@@ -10,6 +10,8 @@ import Proposal from "../views/orga/Proposal.vue";
 import Profile from "../views/orga/Profile.vue";
 import Faq from "../views/orga/Faq.vue";
 import Error from "../views/Error.vue";
+
+import RootTracks from '../views/orga/RootTracks.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -57,12 +59,25 @@ const router = createRouter({
           },
         },
         {
+          path: "track/:slug",
+          name: "proposalsTrack",
+          component: ProposalsTrack,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: "/proposal/:id",
           name: "proposal",
           component: Proposal,
           meta: {
             requiresAuth: true,
           },
+        },
+        {
+          path: "/root/tracks",
+          name: "tracks",
+          component: RootTracks,
         },
       ],
     },
@@ -75,10 +90,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const { data } = await supabase.auth.getSession();
-  const currentUser = data.session?.user;
+  if (!isLoggedIn() && localStorage.getItem("auth")) {
+    const localStorageAuth = JSON.parse(localStorage.getItem("auth"))
+    setLogin(localStorageAuth.user, localStorageAuth.token)
+  }
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  if (requiresAuth && !currentUser) next("/login");
+  if (requiresAuth && !isLoggedIn()) next("/login");
   //else if(!requiresAuth && currentUser) next("/orga");
   else next();
 });

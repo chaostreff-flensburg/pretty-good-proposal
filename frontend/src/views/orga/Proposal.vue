@@ -1,6 +1,6 @@
 <script setup>
-import { supabase } from "../../supabase";
 import { onMounted, ref } from "vue";
+import { client, user } from "../../lib/api";
 import { useRoute } from "vue-router";
 import { useToast } from "primevue/usetoast";
 import { status, proposal_fields } from "../../lib/const";
@@ -46,10 +46,7 @@ onMounted(async () => {
     proposalId.value = route.params.id;
     if (!proposalId.value) throw Error("Keine ID übergeben");
 
-    const {
-      data: { session = null },
-    } = await supabase.auth.getSession();
-    currentUserId.value = session?.user?.id;
+    currentUserId.value = user.value.id
 
     const storeEncryptionKey = await lf.getItem("encryption.privateKey")
     if (!storeEncryptionKey) {

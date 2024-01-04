@@ -1,12 +1,12 @@
 {
     "title": {
-        "de": "Förderung für künstlerische Projekte",
-        "en": "Funding for artistic projects"
+        "de": "Call for Stories",
+        "en": "Call for Stories"
     },
     "deadline": 1709246562,
     "description": {
-        "de": "Lorem Ipsum// 1709246562,",
-        "en": "Lorem Ipsum"
+        "de": "Zeig uns deine Visionen und Utopien für die Chaos Community! Die Maximale Zeichenlänge ist nicht zwingend die Optionale Zeichenlänge für jede Bewerbung. Auch kurze Texte sind gerne gesehen. Alle persönlichen Daten werden nur intern verwendet und nicht weitergegeben",
+        "en": "Show us your visions and utopias for the Chaos Community!"
     },
     "submit": {
         "de": "Abschicken",
@@ -23,6 +23,10 @@
     "saveMessage": {
         "de": "Deine Bewerbung wurde erfolgreich gespeichert.",
         "en": "Your application has been saved successfully."
+    },
+    "incorectCaptchaMessage": {
+        "de": "Das Captcha ist nicht richtig. Bitte versuche es noch einmal.",
+        "en": "The captcha is not correct. Please try again."
     },
     "maxLength": {
         "de": "Maximale Zeichen: ",
@@ -126,7 +130,7 @@
         {
             "key": "amount_min",
             "label": {
-                "de": "Fördersumme minimum €",
+                "de": "Fördersumme minimum € - Wie viel Geld benötigst du mindestens für dein Kunstwerk? Was bräuchtest du um deine Vision voll zu verwirklichen?",
                 "en": "Amount minimum €"
             },
             "type": "number",
@@ -148,7 +152,7 @@
         {
             "key": "costs",
             "label": {
-                "de": "Kosten Beschreibung (optional - wenn du nicht nur Arbeitszeit gefördert bekommen möchtest)",
+                "de": "Kosten Beschreibung (optional - wenn du nicht nur Arbeitszeit gefördert bekommen möchtest, beschreibe bitte deinen Kostenplan",
                 "en": "Costs description (optional - if you don't want to get only working time funded)"
             },
             "type": "textarea",
@@ -158,7 +162,7 @@
         {
             "key": "participants",
             "label": {
-                "de": "Projektteilnehmende",
+                "de": "Projektteilnehmendeb - Bitte liste alle Teilnehmenden Z.B. in dieser Form: Name/Nick, Prononomen, Ort, …",
                 "en": "Project participants"
             },
             "type": "textarea",
@@ -177,7 +181,7 @@
         {
             "key": "phone",
             "label": {
-                "de": "Telefonnummer (optional)",
+                "de": "Telefonnummer (optional)  bitte leerlassen wenn nur per E-Mail kommuniziert werden soll",
                 "en": "Phone number (optional)"
             },
             "type": "input",
@@ -196,20 +200,11 @@
         {
             "key": "links",
             "label": {
-                "de": "Linkliste (optional)",
+                "de": "Linkliste (optional) -  hier kannst du weiteres Material (cloud, video, etc.) zu deiner Bewerbung verlinken. Beschreibe bitte kurz, worum es sich bei jedem link handelt und wie der Inhalt zur Bewerbung passt",
                 "en": "Link list (optional)"
             },
             "type": "textarea",
             "max": 4200,
-            "required": false
-        },
-        {
-            "key": "file",
-            "label": {
-                "de": "Beliebige Datei Bild/PDF mit weniger als 2mb (optional)",
-                "en": "Any file image/PDF with less than 2mb (optional)"
-            },
-            "type": "file",
             "required": false
         },
         {
@@ -237,7 +232,14 @@
                 "de": "Förderbedinungen",
                 "en": "funding conditions"
             },
-            "target": "https://42.ccc.de"
+            "target": "https://42.ccc.de/#foerderbedingungen"
+        },
+        {
+            "label": {
+                "de": "Zeitplan",
+                "en": "Timetable"
+            },
+            "target": "https://42.ccc.de/#zeitplan"
         }
     ]
 }

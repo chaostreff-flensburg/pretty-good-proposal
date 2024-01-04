@@ -67,12 +67,14 @@ const getPrivateKey = async (privateKey) =>
     ["decrypt"]
   );
 
-const encryptProposalData = async (proposal) => {
+const encryptProposalData = async (proposal, publicKeyObj) => {
   const symatricKey = randomString(128);
   const encryptedData = await aes.encrypt(
     JSON.stringify(proposal),
     symatricKey
   );
+  console.log('encryptedData', encryptedData)
+  console.log('getPublicKey(publicKeyObj)', getPublicKey(publicKeyObj))
   const encryptedSymatricKey = await rsa.encrypt(
     symatricKey,
     await getPublicKey(publicKeyObj)

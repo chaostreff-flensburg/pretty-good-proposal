@@ -1,41 +1,72 @@
-import { supabase } from "../supabase.js";
 import { fromProposal } from "./structs.js";
-import { decryptProposalData, encryptProposalData } from "./crypto.js";
+import { decryptProposalData } from "./crypto.js";
+import { ref } from 'vue';
 
-const createProposal = async (proposalData) => {
-  const { encryptedData, encryptedSymatricKey } = await encryptProposalData(
-    proposalData
+import axios from 'axios';
+
+const client = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL : 'http://127.0.0.1:8000/api/',
+  timeout: 1000
+});
+
+const user = ref(null)
+
+const isLoggedIn = () => {
+  return !!user.value;
+}
+
+const setLogin = (paramUser, token) => {
+  client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  user.value = paramUser;
+
+  localStorage.setItem("auth", JSON.stringify({
+    token,
+    user: paramUser
+  })
   );
-  await supabase
-    .from("proposals")
-    .insert({
-      thesis_name: proposalData.thesisName,
-      encrypted_data: encryptedData,
-      encrypted_symatric_key: encryptedSymatricKey,
-      status: "created", // TODO: Not filled from frontend?
-      track: "2023.winter",
-    })
-    .throwOnError();
+}
+
+const language = ref('en')
+const browserLanguage = navigator.language || navigator.userLanguage;
+if (browserLanguage.includes('de')) {
+  language.value = 'de'
+}
+
+const i18n = (value) => {
+  if (value[language.value]) {
+    return value[language.value]
+  }
+  else if (value['en']) {
+    return value[language.value]
+  }
+  else {
+    return 'i18n error'
+  }
+}
+
+const createProposal = async (name, encryptedData, encryptedSymatricKey, trackSlug) => {
+  const reponse = await client.post('proposals', {
+    slug: trackSlug,
+    name,
+    encrypted_data: encryptedData,
+    encrypted_symatric_key: encryptedSymatricKey
+  })
+  return reponse.data.id
 };
 
 const getProposalById = async (id) => {
-  const {
-    data: [encryptedProposal],
-  } = await supabase
-    .from("proposals")
-    .select(`*, opinions(*,profiles(*))`)
-    .eq("id", id)
-    .throwOnError();
+  const response = await client.get(`proposal/${id}`)
+  const proposal = response.data
 
   const { proposalData } = await decryptProposalData(
-    encryptedProposal.encrypted_data,
-    encryptedProposal.encrypted_symatric_key
+    proposal.encrypted_data,
+    proposal.encrypted_symatric_key
   );
 
   return fromProposal({
-    ...encryptedProposal,
+    ...proposal,
     data: proposalData,
   });
 };
 
-export { createProposal, getProposalById };
+export { createProposal, getProposalById, client, user, isLoggedIn, setLogin, i18n };
