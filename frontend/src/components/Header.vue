@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+import { setLogout } from '../lib/api'
 import lf from "localforage";
 import Menubar from "primevue/menubar";
 import Button from "primevue/button";
@@ -8,8 +9,8 @@ const router = useRouter();
 const route = useRoute();
 
 const logout = async () => {
-  //TODO: Build Logout
-  await await lf.clear();
+  await lf.clear();
+  setLogout()
   router.push({
     name: "login",
   });

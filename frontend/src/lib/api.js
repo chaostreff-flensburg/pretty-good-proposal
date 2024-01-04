@@ -15,7 +15,11 @@ const isLoggedIn = () => {
   return !!user.value;
 }
 
-const setLogin = (paramUser, token) => {
+const setLogin = (paramUser, token = null) => {
+  if (!token) {
+    const localStorageAuth = JSON.parse(localStorage.getItem("auth"))
+    token = localStorageAuth.token
+  }
   client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   user.value = paramUser;
 
@@ -24,6 +28,10 @@ const setLogin = (paramUser, token) => {
     user: paramUser
   })
   );
+}
+const setLogout = (paramUser, token = null) => {
+  localStorage.removeItem("auth")
+  user.value = null
 }
 
 const language = ref('en')
@@ -69,4 +77,4 @@ const getProposalById = async (id) => {
   });
 };
 
-export { createProposal, getProposalById, client, user, isLoggedIn, setLogin, i18n };
+export { createProposal, getProposalById, client, user, isLoggedIn, setLogin, setLogout, i18n };

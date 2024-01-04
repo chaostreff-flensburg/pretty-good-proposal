@@ -28,6 +28,10 @@ Route::get('track', [\App\Http\Controllers\TrackController::class, 'show']);
 Route::get('track/proposals', [\App\Http\Controllers\TrackController::class, 'proposals']);
 Route::post('track/users', [\App\Http\Controllers\TrackController::class, 'addUserToTrack']);
 
-
 Route::post('proposals', [\App\Http\Controllers\ProposalController::class, 'create']);
 Route::get('proposal/{proposal}', [\App\Http\Controllers\ProposalController::class, 'show']);
+
+
+Route::get('user', [\App\Http\Controllers\UserController::class, 'me']);
+Route::post('user/{user}', [\App\Http\Controllers\UserController::class, 'update']);
+Route::post('user/{user}/password', [\App\Http\Controllers\UserController::class, 'updatePassword']);
