@@ -4,6 +4,5 @@
 	# Configure when the directive must be executed
 	order php_server before file_server
     # Disable tls
-    tls off
-    # Define the port to listen on
+    auto_https off
 }
