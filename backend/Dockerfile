@@ -1,7 +1,6 @@
-FROM php:8.2-cli-alpine3.18 AS build
+FROM php:8.3-cli-alpine3.18 AS build
 
 RUN mkdir -p /var/www/html
-RUN mkdir -p /var/www/html/databasestore
 
 WORKDIR /var/www/html
 
@@ -17,8 +16,6 @@ RUN mkdir -p /var/www/html
 
 WORKDIR /app/public
 
-COPY --from=build /var/www/html /app/public
-
 ENV TZ=Europe/Berlin
 
 RUN apt-get update && \
@@ -32,7 +29,11 @@ RUN install-php-extensions \
     zip \
     opcache
 
+COPY --from=build /var/www/html /app/public
+
 RUN chmod +x /app/public/docker/entrypoint.sh
 
+EXPOSE 80
+
 ENTRYPOINT ["/app/public/docker/entrypoint.sh"]
-CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
+CMD [ "frankenphp", "run", "--config", "/app/public/docker/Caddyfile" ]
