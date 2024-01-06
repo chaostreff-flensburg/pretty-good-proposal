@@ -1,5 +1,6 @@
 #!/bin/bash
 
+pwd
 ls -al
 
 mkdir -p storage/framework/{sessions,views,cache}

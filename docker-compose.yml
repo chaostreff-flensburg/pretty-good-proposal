@@ -1,8 +1,6 @@
 version: "3"
 
 networks:
-  web:
-    external: true
   stack:
 
 volumes:
@@ -11,23 +9,18 @@ volumes:
 
 services:
   backend:
-    image: ghcr.io/chaostreff-flensburg/pretty-good-proposal/backend:latest
+    build:
+      context: backend
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - storage:/var/www/html/storage
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.api-pgp.rule=Host(`api.bewerbung.c3fl.de`)"
-      - "traefik.http.routers.api-pgp.entrypoints=https,http"
-      - "traefik.http.services.api-pgp.loadbalancer.server.port=80"
-      - "traefik.http.routers.api-pgp.tls.certresolver=mytlschallenge"
-      - "traefik.docker.network=web"
-    working_dir: /app/public
     networks:
-      - web
       - stack
     env_file:
       - .env
+    ports:
+      - 8082:80
     logging:
       options:
         max-size: "10m"
@@ -39,7 +32,7 @@ services:
     networks:
       - stack
     ports:
-      - 127.0.0.1:3306:3306
+      - 127.0.0.1:3366:3306
     env_file:
       - .env
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --sql_mode=''
@@ -50,17 +43,12 @@ services:
     restart: always
 
   frontend:
-    image: ghcr.io/chaostreff-flensburg/pretty-good-proposal/frontend:latest
+    build:
+      context: frontend
+      dockerfile: Dockerfile
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend-pgp.rule=Host(`bewerbung.c3fl.de`)"
-      - "traefik.http.routers.frontend-pgp.entrypoints=https,http"
-      - "traefik.http.services.frontend-pgp.loadbalancer.server.port=80"
-      - "traefik.http.routers.frontend-pgp.tls.certresolver=mytlschallenge"
-      - "traefik.docker.network=web"
-    networks:
-      - web
+    ports:
+      - 8083:80
     logging:
       options:
         max-size: "10m"
