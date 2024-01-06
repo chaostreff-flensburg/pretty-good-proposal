@@ -22,17 +22,17 @@ services:
       - "traefik.http.services.api-pgp.loadbalancer.server.port=80"
       - "traefik.http.routers.api-pgp.tls.certresolver=mytlschallenge"
       - "traefik.docker.network=web"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowheaders=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowcredentials=true"
-      - "traefik.http.middlewares.cors.headers.accesscontrolexposeheaders=*"
-      - "traefik.http.routers.api-pgp.middlewares=cors"
+      - "traefik.http.middlewares.api-pgp-cors.headers.accessControlAllowOriginList=*"
+      - "traefik.http.middlewares.api-pgp-cors.headers.accessControlAllowMethods=GET,POST,PUT,DELETE,OPTIONS,PATCH"
+      - "traefik.http.middlewares.api-pgp-cors.headers.accessControlAllowHeaders=Origin,Content-Type,X-Auth-Token,Authorization,Accept,accept-version,cache-control,credentials,pragm"
+      - "traefik.http.middlewares.api-pgp-cors.headers.accessControlAllowCredentials=true"
+      - "traefik.http.middlewares.api-pgp-cors.headers.accessControlExposeHeaders=*"
+      - "traefik.http.routers.api-pgp.middlewares=api-pgp-cors"
     networks:
       - web
       - stack
+    depends_on:
+      - database
     env_file:
       - .env
     logging:
@@ -68,6 +68,8 @@ services:
       - "traefik.docker.network=web"
     networks:
       - web
+    depends_on:
+      - backend
     logging:
       options:
         max-size: "10m"
