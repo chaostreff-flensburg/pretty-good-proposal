@@ -27,7 +27,9 @@ services:
       - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
       - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
-      - "traefik.http.routers.api.middlewares=cors"
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowcredentials=true"
+      - "traefik.http.middlewares.cors.headers.accesscontrolexposeheaders=*"
+      - "traefik.http.routers.api-pgp.middlewares=cors"
     networks:
       - web
       - stack
