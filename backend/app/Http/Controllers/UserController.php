@@ -74,14 +74,6 @@ class UserController extends Controller
     }
 
     public function createInitialRootUser(){
-        if(User::where('username', 'root')->first()){
-            abort(403);
-        }
-        $user = new User();
-        $user->username = "root";
-        $user->email = "root@chaostreff-flensburg.de";
-        $user->password = Hash::make("root&changeMe");
-        $user->save();
-        return $user;
+        return 'test';
     }
 }
