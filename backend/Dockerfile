@@ -28,6 +28,7 @@ ENV TZ=Europe/Berlin
 
 # Update package lists and install required dependencies
 RUN apt-get update && apt-get install -y \
+    netcat \
     libicu-dev \
     libjpeg-dev \
     libpng-dev \
@@ -37,7 +38,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install and enable the intl and gd extensions
-RUN docker-php-ext-install intl gd
+RUN docker-php-ext-install intl gd pdo_mysql
 
 COPY docker/config.json /docker-entrypoint.d/config.json
 
