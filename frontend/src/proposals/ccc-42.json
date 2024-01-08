@@ -5,7 +5,7 @@
     },
     "deadline": 1709246562,
     "description": {
-        "de": "Zeig uns deine Visionen und Utopien für die Chaos Community! Die Maximale Zeichenlänge ist nicht zwingend die Optionale Zeichenlänge für jede Bewerbung. Auch kurze Texte sind gerne gesehen. Alle persönlichen Daten werden nur intern verwendet und nicht weitergegeben",
+        "de": "Zeig uns deine Visionen und Utopien für die Chaos Community! Die maximale Zeichenlänge ist nicht zwingend die optimale Zeichenlänge für jede Bewerbung. Auch kurze Texte sind gerne gesehen. Alle persönlichen Daten werden nur intern verwendet und nicht weitergegeben",
         "en": "Show us your visions and utopias for the Chaos Community!"
     },
     "submit": {
@@ -29,7 +29,7 @@
         "en": "The captcha is not correct. Please try again."
     },
     "maxLength": {
-        "de": "Maximale Zeichen: ",
+        "de": "maximale Zeichen: ",
         "en": "Max character: "
     },
     "fields": [
@@ -46,7 +46,7 @@
         {
             "key": "short_description",
             "label": {
-                "de": "Kurz Beschreibung",
+                "de": "Kurzbeschreibung",
                 "en": "Short description"
             },
             "type": "textarea",
@@ -152,7 +152,7 @@
         {
             "key": "costs",
             "label": {
-                "de": "Kosten Beschreibung (optional - wenn du nicht nur Arbeitszeit gefördert bekommen möchtest, beschreibe bitte deinen Kostenplan",
+                "de": "Kostenbeschreibung (optional - wenn du nicht nur Arbeitszeit gefördert bekommen möchtest, beschreibe bitte deinen Kostenplan",
                 "en": "Costs description (optional - if you don't want to get only working time funded)"
             },
             "type": "textarea",
@@ -162,7 +162,7 @@
         {
             "key": "participants",
             "label": {
-                "de": "Projektteilnehmendeb - Bitte liste alle Teilnehmenden Z.B. in dieser Form: Name/Nick, Prononomen, Ort, …",
+                "de": "Projektteilnehmende - Bitte liste alle Teilnehmenden z.B. in dieser Form: Name/Nick, Prononomen, Ort, …",
                 "en": "Project participants"
             },
             "type": "textarea",
@@ -200,7 +200,7 @@
         {
             "key": "links",
             "label": {
-                "de": "Linkliste (optional) -  hier kannst du weiteres Material (cloud, video, etc.) zu deiner Bewerbung verlinken. Beschreibe bitte kurz, worum es sich bei jedem link handelt und wie der Inhalt zur Bewerbung passt",
+                "de": "Linkliste (optional) -  hier kannst du weiteres Material (Cloud, Video, etc.) zu deiner Bewerbung verlinken. Beschreibe bitte kurz, worum es sich bei jedem link handelt und wie der Inhalt zur Bewerbung passt",
                 "en": "Link list (optional)"
             },
             "type": "textarea",
