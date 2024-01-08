@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('track_id')->nullable()->default(null);
             $table->string('name');
-            $table->string('encrypted_data');
-            $table->string('encrypted_symatric_key');
+            $table->text('encrypted_data');
+            $table->text('encrypted_symatric_key');
             $table->string('status');
             $table->timestamps();
         });

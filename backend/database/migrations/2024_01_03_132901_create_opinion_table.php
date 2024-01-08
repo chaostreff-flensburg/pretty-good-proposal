@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('proposal_id')->nullable()->default(null);
             $table->string('vote');
-            $table->string('comment');
+            $table->text('comment');
             $table->string('user_id');
             $table->timestamps();
         });
