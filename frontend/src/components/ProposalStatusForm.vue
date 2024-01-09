@@ -33,7 +33,9 @@ onMounted(() => {
 const updateProposalStatus = async () => {
   loading.value = true;
   try {
-    // TODO: Build API Call
+    await client.post(`proposal/${proposalId}/updateStatus`, {
+      status: statusForm.value,
+    });
     router.go();
   } catch (error) {
     console.error(error);
