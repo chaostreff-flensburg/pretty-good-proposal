@@ -38,6 +38,22 @@ class ProposalController extends Controller
         return $proposal;
     }
 
+    public function updateStatus(Proposal $proposal, Request $request)
+    {
+        if (!Auth::check()){
+            abort(403);
+        }
+        $user = Auth::user();
+        $proposal->load('track', 'opinions','opinions.user', );
+
+        if(!$proposal->track->users->contains($user->id)){
+            abort(403);
+        }
+        $proposal->status = $request->status;
+        $proposal->save();
+        return $proposal->status;
+    }
+
     public function upsertOpinion(Proposal $proposal, Request $request)
     {
         if (!Auth::check()){
