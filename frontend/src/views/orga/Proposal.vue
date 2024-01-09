@@ -26,10 +26,13 @@ const myOpinion = ref(null);
 const currentUserId = ref(null);
 const toast = useToast();
 const home = ref({
-  label: "Bewerbungen Übersicht",
-  to: "/orga",
+  label: "Übersicht",
+  route: "/orga",
 });
-const items = ref([{ label: "Computer" }]);
+const items = ref([{
+  label: 'Track',
+  route: `/orga/track/${route.params.id}`,
+}]);
 const proposalData = ref(null);
 
 const getPrivateKey = () => new Promise((resolve, reject) => {
@@ -89,7 +92,15 @@ const fieldName = (name) => {
     <ProgressSpinner />
   </template>
   <template v-else>
-    <Breadcrumb :home="home" :model="items" />
+    <Breadcrumb :home="home" :model="items">
+      <template #item="{ item, props }">
+        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+          <a :href="href" v-bind="props.action" @click="navigate">
+            <span class="text-primary font-semibold">{{ item.label }}</span>
+          </a>
+        </router-link>
+      </template>
+    </Breadcrumb>
     <div class="grid">
       <div class="col">
         <Card>
