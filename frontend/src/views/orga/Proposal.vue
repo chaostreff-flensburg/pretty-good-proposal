@@ -110,7 +110,7 @@ const fieldName = (name) => {
               <div class="font-bold w-full">
                 {{ fieldName(name) || name }}:
               </div>
-              <span>{{ value }}</span>
+              <span style="white-space: pre-wrap">{{ value }}</span>
             </article>
           </template>
         </Card>

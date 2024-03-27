@@ -59,7 +59,6 @@ const loadPoposals = async () => {
       const max_vote_count = trackUsers.value.length
       let vote_status = 'vote_completed'
       if (vote_count !== max_vote_count) {
-        console.log('proposal.opinions', proposal.opinions, user.value)
         if (proposal.opinions.find(
           (opinion) => +opinion.user_id === +user.value.id
         )) {
