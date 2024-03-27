@@ -59,8 +59,9 @@ const loadPoposals = async () => {
       const max_vote_count = trackUsers.value.length
       let vote_status = 'vote_completed'
       if (vote_count !== max_vote_count) {
+        console.log('proposal.opinions', proposal.opinions, user.value)
         if (proposal.opinions.find(
-          (opinion) => opinion.user_id === user.value.id
+          (opinion) => +opinion.user_id === +user.value.id
         )) {
           vote_status = 'others_need_to_vote'
         } else {
@@ -168,15 +169,16 @@ const rowClass = (data) => {
       <Column v-tooltip="'Anzahl abgegebene Stimmen'" field="vote_count" header="👥" sortable style="width: 8%">
       </Column>
       <Column v-tooltip="'Durchschnittswert abgegebene Stimmen'" field="vote_average" header="🗳️" sortable
-        style="width: 8%"></Column>
+        style="width: 8%">
+      </Column>
       <Column v-tooltip="'Anzahl Kommentare'" field="comments_count" header="📝" sortable style="width: 8%"></Column>
       <Column field="created_at" header="🕰️" sortable style="width: 8%"></Column>
     </DataTable>
     <Accordion class="mt-2">
       <AccordionTab header="🤓 Entwickly Informationen">
         <pre>
-                    {{ proposals }}
-                </pre>
+      {{ proposals }}
+    </pre>
       </AccordionTab>
     </Accordion>
     <section>
