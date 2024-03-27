@@ -44,7 +44,7 @@ const status = {
     description: "Die Bewerbung ist angenommen",
   },
   rejected: {
-    name: "❌ Abeglehnt",
+    name: "❌ Abgelehnt",
     description: "Die Bewerbung ist abgelehnt",
   },
 };
