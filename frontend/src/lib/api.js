@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL : 'http://127.0.0.1:8000/api/',
-  timeout: 1000
+  timeout: 15000
 });
 
 const user = ref(null)
