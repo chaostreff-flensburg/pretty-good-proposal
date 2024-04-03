@@ -45,12 +45,12 @@ const loadPoposals = async () => {
       proposal.created_at = dayjs(proposal.created_at).format(
         "DD.MM.YYYY HH:mm"
       );
-      const vote_average = proposal.opinions.reduce(
+      const vote_average = +proposal.opinions.reduce(
         (accumulator, currentValue) => (parseFloat(accumulator) + parseFloat(currentValue.vote)).toFixed(2),
         0
       );
       const comments_count = proposal.opinions.filter(
-        (opinion) => !!opinion.comment && opinion.comment !== ""
+        (opinion) => !!opinion.commvote_averageent && opinion.comment !== ""
       ).length;
       const vote_count = proposal.opinions.filter(
         (opinion) => opinion.vote !== null
@@ -180,7 +180,6 @@ const rowClass = (data) => {
     <ProgressSpinner />
   </template>
   <template v-else>
-    <pre>{{ proposals.value }}</pre>
     <DataTable :value="proposals" :rowClass="rowClass" striped-rows show-gridlines selection-mode="single" data-key="id"
       table-style="min-width: 50rem" @rowSelect="onRowSelect">
       <template #empty> Keine Bewerbungen mit diesem Filter gefunden. </template>
