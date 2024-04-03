@@ -184,7 +184,13 @@ const rowClass = (data) => {
       table-style="min-width: 50rem" @rowSelect="onRowSelect">
       <template #empty> Keine Bewerbungen mit diesem Filter gefunden. </template>
       <Column v-tooltip="'ID wird vom System vergeben'" field="id" header="ID" sortable style="width: 8%"></Column>
-      <Column field="name" header="Name" sortable style="width: 60%"></Column>
+      <Column field="name" header="Name" sortable style="width: 60%">
+        <template #body="slotProps">
+          <router-link :to="`/proposal/${slotProps.data.id}`">
+            <span>{{ slotProps.data.name }}</span>
+          </router-link>
+        </template>
+      </Column>
       <Column field="status" header="Status" sortable style="width: 8%"></Column>
       <Column v-tooltip="'Anzahl abgegebene Stimmen'" field="vote_count" header="👥" sortable style="width: 8%">
       </Column>
