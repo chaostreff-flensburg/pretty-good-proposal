@@ -77,4 +77,14 @@ const getProposalById = async (id) => {
   });
 };
 
-export { createProposal, getProposalById, client, user, isLoggedIn, setLogin, setLogout, i18n };
+const downLoadJson = (data, filename) => {
+  const jsonData = JSON.stringify({ data })
+  const a = document.createElement('a');
+  const type = filename.split(".").pop();
+  a.href = URL.createObjectURL(new Blob([jsonData], { type: `text/${type === "txt" ? "plain" : type}` }));
+  a.download = filename;
+  a.click();
+}
+
+export { createProposal, getProposalById, client, user, isLoggedIn, setLogin, setLogout, i18n, downLoadJson };
+

@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useToast } from "primevue/usetoast";
 import { status } from "../../lib/const";
-import { client, user } from "../../lib/api";
+import { client, createProposal, getProposalById, user, downLoadJson } from "../../lib/api";
 import StatusDropdown from "../../components/StatusDropdown.vue";
 import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
@@ -92,13 +92,8 @@ const exportTrackData = async () => {
   loading.value = true;
   try {
     const response = await client.get(`track/export/?slug=${route.params.slug}`)
-    const data = JSON.stringify({ track: response.data })
     const name = `${+new Date()}-${route.params.slug}.json`
-    const a = document.createElement('a');
-    const type = name.split(".").pop();
-    a.href = URL.createObjectURL(new Blob([data], { type: `text/${type === "txt" ? "plain" : type}` }));
-    a.download = name;
-    a.click();
+    downLoadJson(response.data, name)
   } catch (error) {
     console.error(error);
     toast.add({
@@ -111,6 +106,30 @@ const exportTrackData = async () => {
     loading.value = false;
   }
 };
+const exportContentData = async () => {
+  loading.value = true;
+  try {
+    let proposolsContent = []
+    for (const proposal of proposals.value) {
+      const { data } = await getProposalById(proposal.id)
+      const { title, short_description, description, why, type } = data
+      proposolsContent.push({ title, short_description, description, why, type })
+    }
+    const name = `${+new Date()}-${route.params.slug}.json`
+    downLoadJson(proposolsContent, name)
+
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      severity: "warn",
+      summary: "Error",
+      detail: error?.message || "Beim laden ist ein Fehler aufgetrente",
+      life: 5000,
+    });
+  } finally {
+    loading.value = false;
+  }
+}
 const onRowSelect = (event) => {
   console.log(event);
   const { id } = event.data;
@@ -187,5 +206,6 @@ const rowClass = (data) => {
     </section>
 
     <Button label="💾 Alle Track Daten Exportieren" @click="exportTrackData" />
+    <Button class="ml-2" label="Export Inhaltsfelder (NICHT VERSCHLÜSSELT)" @click="exportContentData" />
   </template>
 </template>
