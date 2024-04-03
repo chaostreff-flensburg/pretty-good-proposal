@@ -88,5 +88,15 @@ class DatabaseSeeder extends Seeder
         $proposal3->encrypted_symatric_key = 'KYklf00ms/HEnx5EwqwsS4SupfPAd2F0zMBw78Yn5omcH47/yVsa6GBNsDduu3lm/E+MzDD9vnW2K4bQCs9KM70GD3zllqZ8tBkvxratlgcWchifM+Uv0WtQKu/HRQjJs8gZbZm8vMpQDgJLOhKqwtzK4x8gH6A3lr6cdET/dMPYI9GKarCBzGzBkBTJVt8qgtun48+yS6W8rZURZf49t94kX92bThhuSeALW+ffRYXjWuZvKBNdccDEwQjfQ1oDLXYEtJUVb1BtuUbNmhNmDXtDRBjhyvKhJnKi4mwjX8+qJPOepAK9InU6rs/J4MRoDDtMHJhiL1ARYcaEJNHfY+PLkqDNh3JeYQer0LZiPSZaTL4RQCPz2cGY8ZNGmMu6fqrKXGQhpJ/Ux8BfAgyiOld0NICQ5aBJMcxk6w0HFSFHBcXToWw6LQh2OviM4U8tY+OCuN0/2zBn+1onVQTIJlIgkSQJby2xmhyXKPnrxhPTsNsx6Bnt2AQhwXLzld/dYfqsnqR56qcv+2kDcrJezf1aVmRX9Yu7IyCq28xWrDNm09x7kWXmGelnAX2wWiAFhiC9AqZD8rfMsooJKu9kNCzXS27sAbtV0z4CbjQRAUl6Ud2JullBvV8bRfERkrj3lAFjHou8wE7gaTx6HOWw7wHwThxp2AbYRpKsPvRWCuM=';
         $proposal3->status = 'created';
         $proposal3->save();
+
+        for ($i=0; $i<=100; $i++) {
+            $proposalForLopp = new \App\Models\Proposal();
+            $proposalForLopp->track_id = $track->id;
+            $proposalForLopp->name = 'Test Proposal For Loop'. $i;
+            $proposalForLopp->encrypted_data = 'Tni1AwFx/vgNIu38D6Mj5TnKWV+HCO+PqvRaICNYYdv8epe8BMb6CwT0+JgsjqNUqXGRgG4Von2DwgeZwmmRl/mjIiBo5A2He75LQq8BNKMF5jxFWENd1Id5GBpH69gBPzO9e7ZOrQnKugPfJOycdJ7rkTCwHmsAJUs0BZDJolxrEJhIaaG5Q3DtPgyMu9uNlm5i5hbqQqs6OKWIAA5jEaxkW7Wq9a7PWt6ojVfUROn9hHXgA437PobT+++/nFevJJAZl3la7uAB9tMYm/5mFr+qOKI5h8RlHXtQQ4S6RuaGqz8qoN8aHbmjj+VVSnCVX3ymjRARtnAzgUabtDI3blGto59dB7VMAeeEiEP+NkFWfBkPTSXYGBlov5jVeAxZBjAj7OACusMXn3tecNA7owboow8S8SL6JrsiabEUvDRYXtIzMTSmvB6kKNyJk8L78aqaN0E+D1DP27LaLzKgHBdYX8hrbpILp10=';
+            $proposalForLopp->encrypted_symatric_key = 'KYklf00ms/HEnx5EwqwsS4SupfPAd2F0zMBw78Yn5omcH47/yVsa6GBNsDduu3lm/E+MzDD9vnW2K4bQCs9KM70GD3zllqZ8tBkvxratlgcWchifM+Uv0WtQKu/HRQjJs8gZbZm8vMpQDgJLOhKqwtzK4x8gH6A3lr6cdET/dMPYI9GKarCBzGzBkBTJVt8qgtun48+yS6W8rZURZf49t94kX92bThhuSeALW+ffRYXjWuZvKBNdccDEwQjfQ1oDLXYEtJUVb1BtuUbNmhNmDXtDRBjhyvKhJnKi4mwjX8+qJPOepAK9InU6rs/J4MRoDDtMHJhiL1ARYcaEJNHfY+PLkqDNh3JeYQer0LZiPSZaTL4RQCPz2cGY8ZNGmMu6fqrKXGQhpJ/Ux8BfAgyiOld0NICQ5aBJMcxk6w0HFSFHBcXToWw6LQh2OviM4U8tY+OCuN0/2zBn+1onVQTIJlIgkSQJby2xmhyXKPnrxhPTsNsx6Bnt2AQhwXLzld/dYfqsnqR56qcv+2kDcrJezf1aVmRX9Yu7IyCq28xWrDNm09x7kWXmGelnAX2wWiAFhiC9AqZD8rfMsooJKu9kNCzXS27sAbtV0z4CbjQRAUl6Ud2JullBvV8bRfERkrj3lAFjHou8wE7gaTx6HOWw7wHwThxp2AbYRpKsPvRWCuM=';
+            $proposalForLopp->status = 'created';
+            $proposalForLopp->save();
+        }
     }
 }
