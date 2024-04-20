@@ -2,12 +2,11 @@
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { client, setLogin } from "../lib/api";
 
 
 const router = useRouter();
-const route = useRoute();
 
 const loading = ref(false);
 const email = ref(import.meta.env.PROD ? "" : "root@chaostreff-flensburg.de");
@@ -23,12 +22,7 @@ const onSubmit = async () => {
 
     setLogin(response.data.user, response.data.authorization.token)
 
-    const response2 = await client.get('tracks', {
-      password: password.value,
-      email: email.value
-    })
     router.push('/orga')
-    console.log(response2)
   } catch (error) {
     console.error(error)
   }
@@ -42,15 +36,15 @@ const onSubmit = async () => {
       <div class="">
         <h1>Login</h1>
         <form @submit.prevent="onSubmit">
-          <div class="field">
-            <label>E-Mail-Adresse</label>
-            <InputText v-model="email" type="email" required />
+          <div class="flex flex-column gap-2">
+            <label for="email">E-Mail-Adresse: </label>
+            <InputText v-model="email" type="email" required id="email" autofocus="true" />
           </div>
-          <div class="field">
-            <label>Passwort</label>
-            <InputText v-model="password" type="password" required />
+          <div class="flex flex-column gap-2 mt-2">
+            <label for="password">Passwort</label>
+            <InputText v-model="password" type="password" required id="password" />
           </div>
-          <Button :disabled="loading" type="submit" label="Login" />
+          <Button :disabled="loading" type="submit" label="Login" class="mt-3" />
         </form>
       </div>
     </div>
