@@ -4,8 +4,12 @@ import { client } from "../../lib/api";
 
 const tracks = ref([])
 const loadTracks = async () => {
-    const response = await client.get('tracks')
-    tracks.value = response.data
+    try {
+        const response = await client.get('tracks')
+        tracks.value = response.data
+    } catch (error) {
+        console.error(error)
+    }
 }
 loadTracks()
 </script>
