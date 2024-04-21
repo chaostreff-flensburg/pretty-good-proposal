@@ -29,10 +29,7 @@ const home = ref({
   label: "Übersicht",
   route: "/orga",
 });
-const items = ref([{
-  label: 'Track',
-  route: `/orga/track/${route.params.id}`,
-}]);
+const items = ref([]);
 const proposalData = ref(null);
 
 const getPrivateKey = () => new Promise((resolve, reject) => {
@@ -59,8 +56,13 @@ onMounted(async () => {
     }
 
     proposal.value = await getProposalById(proposalId.value);
-    items.value[0].label = `${proposal.value.id} - ${proposal.value.name}`;
-    home.value.to = `/orga/track/${proposal.value.track.slug}`;
+    items.value.push({
+      label: proposal.value.track.name,
+      route: `/orga/track/${proposal.value.track.slug}`
+    }, {
+      label: proposal.value.name,
+      route: `/proposal/${proposal.value.id}`
+    })
 
     proposalData.value = proposals[proposal.value.track.slug];
 
