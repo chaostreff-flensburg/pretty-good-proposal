@@ -1,11 +1,13 @@
 <script setup>
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import Toast from 'primevue/toast';
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { client, setLogin } from "../lib/api";
+import { useToast } from 'primevue/usetoast';
 
-
+const toast = useToast();
 const router = useRouter();
 
 const loading = ref(false);
@@ -25,6 +27,7 @@ const onSubmit = async () => {
     router.push('/orga')
   } catch (error) {
     console.error(error)
+    toast.add({ severity: 'error', summary: 'Login war nicht erfolgreich', life: 6000 });
   }
   loading.value = false;
 };
@@ -32,6 +35,7 @@ const onSubmit = async () => {
 </script>
 <template>
   <main>
+    <Toast />
     <div class="">
       <div class="">
         <h1>Login</h1>
