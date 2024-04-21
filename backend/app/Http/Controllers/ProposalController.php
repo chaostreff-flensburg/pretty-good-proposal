@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmProposalCreated;
+use App\Mail\InfoProposalCreated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Track;
 use App\Models\Proposal;
 use App\Models\Opinion;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProposalController extends Controller
 {
     public function create(Request $request)
     {
-        $track = Track::where('slug', $request->slug)->firstOrFail();
+        $track = Track::where('slug', $request->slug)
+            ->with('users')
+            ->firstOrFail();
         $proposal = new Proposal();
         $proposal->track_id = $track->id;
         $proposal->name = $request->name;
@@ -20,6 +26,19 @@ class ProposalController extends Controller
         $proposal->encrypted_symatric_key = $request->encrypted_symatric_key;
         $proposal->status = 'created';
         $proposal->save();
+
+        try{
+            if($request->email){
+                // send recipent emails
+                Mail::to($request->email)->send(new ConfirmProposalCreated($proposal->id));
+                // send email to the track users
+                foreach($track->users as $user){
+                    Mail::to($user->email)->send(new InfoProposalCreated($proposal->id, $proposal->name, env('FRONTEND_URL').'/proposal/'.$proposal->id));
+                }
+            }
+        }catch(\Exception $e){
+            Log::error($e);
+        }
 
         return $proposal->only('id');
     }

@@ -74,6 +74,7 @@ class UserController extends Controller
     }
 
     public function createInitialRootUser(){
+        return;
         if(User::where('username', 'root')->first()){
             abort(403);
         }

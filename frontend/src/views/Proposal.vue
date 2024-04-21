@@ -110,9 +110,9 @@ const encryptUserProposal = async (userPublicKey) => {
 };
 const saveProposal = async (encryptedData, encryptedSymatricKey) => {
   try {
-    console.log('proposal', proposal)
     const name = proposal.value['title'] || 'Keine Name Vorhanden'
-    const response = await createProposal(name, encryptedData, encryptedSymatricKey, route.query.proposal);
+    const email = proposal.value['email'] || null
+    const response = await createProposal(name, email, encryptedData, encryptedSymatricKey, route.query.proposal);
     progressSaveProposal.value[2].status = 'done'
     progressSaveProposal.value[3].status = 'done'
     return response;
@@ -146,8 +146,8 @@ const saveProposal = async (encryptedData, encryptedSymatricKey) => {
                   :min="field.min" />
               </template>
               <template v-else-if="field.type === 'textarea'">
-                <Textarea :id="field.key" v-model="proposal[field.key]" :required="field.required" :rows="field.rows || 5"
-                  :maxlength="field.max" />
+                <Textarea :id="field.key" v-model="proposal[field.key]" :required="field.required"
+                  :rows="field.rows || 5" :maxlength="field.max" />
               </template>
               <template v-else-if="field.type === 'checkbox'">
                 <Checkbox :id="field.key" v-model="proposal[field.key]" :binary="true" :required="field.required" />
@@ -186,12 +186,14 @@ const saveProposal = async (encryptedData, encryptedSymatricKey) => {
       </template>
     </Card>
     <div v-else>
-      <Message v-if="proposalData?.deadline && proposalData.deadline < dayjs().unix()" :closable="false" severity="error">
+      <Message v-if="proposalData?.deadline && proposalData.deadline < dayjs().unix()" :closable="false"
+        severity="error">
         The deadline {{ dayjs.unix(proposalData.deadline).format('DD.MM.YYYY HH:mm:ss') }} (MEZ) is already over... ()
       </Message>
       <AllProposals />
       Software: <a href="https://github.com/chaostreff-flensburg/pretty-good-proposal"
-        target="_blank">pretty-good-proposal (github)</a>
+        target="_blank">pretty-good-proposal
+        (github)</a>
     </div>
   </main>
 </template>

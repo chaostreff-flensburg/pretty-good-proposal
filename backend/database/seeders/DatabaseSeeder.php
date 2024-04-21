@@ -17,24 +17,26 @@ class DatabaseSeeder extends Seeder
         // Only for development use
         $rootUser = new User();
         $rootUser->username = 'root';
-        $rootUser->email = 'root@chaostreff-flensburg.de';
+        $rootUser->email = 'samuel+root@chaostreff-flensburg.de'; // CHANGE TO YOUR EMAIL
         $rootUser->password = Hash::make('rootroot');
         $rootUser->email_verified_at = now();
         $rootUser->save();
 
         $user = new User();
         $user->username = 'user';
-        $user->email = 'user@chaostreff-flensburg.de';
+        $user->email = 'samuel+user@chaostreff-flensburg.de'; // CHANGE TO YOUR EMAIL
         $user->password = Hash::make('useruser');
         $user->email_verified_at = now();
         $user->save();
 
         $user2 = new User();
         $user2->username = 'user2';
-        $user2->email = 'user2@chaostreff-flensburg.de';
+        $user2->email = 'samuel+user2@chaostreff-flensburg.de'; // CHANGE TO YOUR EMAIL
         $user2->password = Hash::make('useruser');
         $user2->email_verified_at = now();
         $user2->save();
+
+
 
         $votingUsers = [$user, $user2];
 
@@ -46,6 +48,17 @@ class DatabaseSeeder extends Seeder
 
         foreach($votingUsers as $votingUser) {
             $track->users()->attach($votingUser->id);
+        }
+
+
+        for ($i=3; $i<=6; $i++) {
+            $loopUser = new User();
+            $loopUser->username = 'user'.$i;
+            $loopUser->email = 'samuel+user'.$i.'@chaostreff-flensburg.de'; // CHANGE TO YOUR EMAIL
+            $loopUser->password = Hash::make('useruser');
+            $loopUser->email_verified_at = now();
+            $loopUser->save();
+            $track->users()->attach($loopUser->id);
         }
 
         $proposal = new \App\Models\Proposal();

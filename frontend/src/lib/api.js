@@ -52,10 +52,11 @@ const i18n = (value) => {
   }
 }
 
-const createProposal = async (name, encryptedData, encryptedSymatricKey, trackSlug) => {
+const createProposal = async (name, email, encryptedData, encryptedSymatricKey, trackSlug) => {
   const reponse = await client.post('proposals', {
     slug: trackSlug,
     name,
+    email,
     encrypted_data: encryptedData,
     encrypted_symatric_key: encryptedSymatricKey
   })
