@@ -98,7 +98,7 @@ router.beforeEach(async (to, from, next) => {
     setLogin(localStorageAuth.user, localStorageAuth.token)
   }
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  if (requiresAuth && !isLoggedIn()) next("/login");
+  if (requiresAuth && !isLoggedIn()) next(`/login?redirect=${to.fullPath}`);
   //else if(!requiresAuth && currentUser) next("/orga");
   else next();
 });

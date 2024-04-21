@@ -3,12 +3,13 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Toast from 'primevue/toast';
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { client, setLogin } from "../lib/api";
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
 const router = useRouter();
+const route = useRoute();
 
 const loading = ref(false);
 const email = ref(import.meta.env.PROD ? "" : "root@chaostreff-flensburg.de");
@@ -24,7 +25,7 @@ const onSubmit = async () => {
 
     setLogin(response.data.user, response.data.authorization.token)
 
-    router.push('/orga')
+    router.push(route.query.redirect || '/orga')
   } catch (error) {
     console.error(error)
     toast.add({ severity: 'error', summary: 'Login war nicht erfolgreich', life: 6000 });
