@@ -94,7 +94,7 @@
             "required": false
         },
         {
-            "key": "thesisName",
+            "key": "title",
             "label": {
                 "de": "Titel der Masterarbeit",
                 "en": "Title of the Master's thesis"
