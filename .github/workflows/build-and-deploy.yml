@@ -2,7 +2,7 @@ name: Build and deploy V2
 
 on:
   push:
-    branches: ["v2-customize-things"]
+    branches: ["main"]
 
 concurrency:
   group: ${{ github.ref }}
