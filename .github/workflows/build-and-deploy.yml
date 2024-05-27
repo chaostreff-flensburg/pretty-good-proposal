@@ -1,8 +1,8 @@
-name: Build and deploy
+name: Build and deploy V2
 
 on:
   push:
-    branches: ["main"]
+    branches: ["v2-customize-things"]
 
 concurrency:
   group: ${{ github.ref }}
@@ -29,21 +29,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build
+      - name: Build Frontend
         uses: docker/build-push-action@v3
         with:
-          context: .
-          file: Dockerfile
+          context: frontend
+          file: frontend/Dockerfile
           push: true
-          tags: "ghcr.io/${{ github.repository }}:latest"
-          build-args: |
-            "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
-            "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}"
-      
-      - name: pull and start new image
-        uses: appleboy/ssh-action@master
+          tags: "ghcr.io/${{ github.repository }}/frontend:latest"
+
+      - name: Build Backend
+        uses: docker/build-push-action@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.PRIVATE_KEY}}
-          script: cd ccs-proposal && docker compose pull && docker compose up -d
+          context: backend
+          file: backend/Dockerfile
+          push: true
+          tags: "ghcr.io/${{ github.repository }}/backend:latest"
+
+      # - name: pull and start new image
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USER_NAME }}
+      #     key: ${{ secrets.PRIVATE_KEY}}
+      #     script: cd pretty-good-proposal-v2 && docker compose pull && docker compose up -d
