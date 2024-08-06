@@ -11,6 +11,8 @@ import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
 import Breadcrumb from "primevue/breadcrumb";
 import Card from "primevue/card";
+import Button from "primevue/button";
+import InlineMessage from 'primevue/inlinemessage';
 import { useDialog } from "primevue/usedialog";
 import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
 import lf from "localforage";
@@ -31,6 +33,7 @@ const home = ref({
 });
 const items = ref([]);
 const proposalData = ref(null);
+const showOtherOpinions = ref(true)
 
 const getPrivateKey = () => new Promise((resolve, reject) => {
   dialog.open(PrivateKeyForm, {
@@ -65,10 +68,12 @@ onMounted(async () => {
     })
 
     proposalData.value = proposals[proposal.value.track.slug];
-
     myOpinion.value = proposal.value.opinions.find(
-      (opinion) => opinion.profile_id === currentUserId.value
+      (opinion) => +opinion.user_id === +currentUserId.value
     );
+    if (!myOpinion.value) {
+      showOtherOpinions.value = false
+    }
   } catch (error) {
     console.error(error);
     toast.add({
@@ -120,7 +125,14 @@ const fieldName = (name) => {
         <EasyProposalCommunication v-if="proposal.status != 'created'" :proposal="proposal" />
       </div>
       <div class="col">
-        <div class="flex mt-1">
+        <div v-if="!showOtherOpinions">
+          <p>
+            <InlineMessage severity="warn">Die anderen Meinungen sind ausgeblendet, weil du noch nicht abgestimmt hast.
+            </InlineMessage>
+          </p>
+          <Button severity="info" label="Trotzdem anzeigen" @click="showOtherOpinions = true" />
+        </div>
+        <div v-if="showOtherOpinions" class="flex mt-1">
           <Card class="mr-1" style="max-width: 60px; max-height: 120px">
             <template #content>🗳️ {{ proposal.vote_average }} </template>
           </Card>
@@ -143,18 +155,18 @@ const fieldName = (name) => {
               :current-user-id="currentUserId" />
           </template>
         </Card>
-
-        <h4>Alle Meinungen</h4>
-        <article v-for="opinion in proposal.opinions" v-if="proposal.opinions?.length > 0">
-          <Card class="mt-1">
-            <template #title>{{ opinion.special_vote || opinion.vote }}
-              {{ opinion.user?.username }}
-            </template>
-            <template #content>{{ opinion.comment }}</template>
-          </Card>
-        </article>
-        <div v-else>Sei die erste Person die eine Meinung abgibt</div>
-
+        <div v-if="showOtherOpinions">
+          <h4>Alle Meinungen</h4>
+          <article v-for="opinion in proposal.opinions" v-if="proposal.opinions?.length > 0">
+            <Card class="mt-1">
+              <template #title>{{ opinion.special_vote || opinion.vote }}
+                {{ opinion.user?.username }}
+              </template>
+              <template #content>{{ opinion.comment }}</template>
+            </Card>
+          </article>
+          <div v-else>Sei die erste Person die eine Meinung abgibt</div>
+        </div>
         <h3>Status Ändern</h3>
         <ProposalStatusForm v-if="proposalId" :proposal-id="route.params.id" :proposal-status="proposal.status" />
       </div>

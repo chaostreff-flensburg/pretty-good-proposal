@@ -73,6 +73,6 @@ const onSubmit = handleSubmit(async (values, actions) => {
       </label>
       <StatusDropdown v-model="statusForm" />
     </div>
-    <Button type="submit" label="Speichern" />
+    <Button class="mt-2" type="submit" label="Speichern" />
   </form>
 </template>
