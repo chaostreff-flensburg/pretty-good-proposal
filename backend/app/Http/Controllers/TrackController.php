@@ -76,11 +76,19 @@ class TrackController extends Controller
             abort(403);
         }
 
-        $proposals = Proposal::where('track_id', $track->id)->where('status', $request->proposalStatus)->with('opinions', 'opinions.user')->get();
+        $proposals = Proposal::where('track_id', $track->id)
+            ->where('status', $request->proposalStatus)
+            ->with('opinions', 'opinions.user')
+            ->get();
+        
+        $opinions = Proposal::where('track_id', $track->id)
+            ->with('opinions')
+            ->get();
 
         return [
             'proposals' => $proposals,
             'users' => $track->users,
+            'opinions' => $opinions
         ];
     }
 

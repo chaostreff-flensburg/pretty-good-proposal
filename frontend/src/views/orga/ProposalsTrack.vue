@@ -13,6 +13,7 @@ import Column from "primevue/column";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
 import Button from "primevue/button";
+import OpinionStats from "../../components/OpinionStats.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -21,6 +22,7 @@ const proposals = ref([]);
 const toast = useToast();
 const proposalStatus = ref("created");
 const trackUsers = ref([]);
+const trackOpions = ref([]);
 
 onMounted(async () => {
   await loadPoposals();
@@ -33,6 +35,9 @@ const loadPoposals = async () => {
     const response = await client.get(`track/proposals?slug=${route.params.slug}&proposalStatus=${proposalStatus.value}`)
     let data = response.data.proposals
     trackUsers.value = response.data.users
+    trackOpions.value = response.data.opinions.flatMap((track) => {
+      return track.opinions
+    })
 
     data = data.map((proposal) => {
       return {
@@ -215,5 +220,7 @@ const rowClass = (data) => {
 
     <Button label="💾 Alle Track Daten Exportieren" @click="exportTrackData" />
     <Button class="ml-2" label="Export Inhaltsfelder (NICHT VERSCHLÜSSELT)" @click="exportContentData" />
+
+    <OpinionStats :opinions="trackOpions" :users="trackUsers" />
   </template>
 </template>
