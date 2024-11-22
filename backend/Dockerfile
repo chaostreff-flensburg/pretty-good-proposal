@@ -28,7 +28,7 @@ ENV TZ=Europe/Berlin
 
 # Update package lists and install required dependencies
 RUN apt-get update && apt-get install -y \
-    netcat \
+    netcat-traditional \
     libicu-dev \
     libjpeg-dev \
     libpng-dev \
