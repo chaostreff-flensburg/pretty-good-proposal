@@ -10,8 +10,6 @@ COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
 COPY ./ /var/www/html
 
-RUN ls -al
-
 RUN composer install --no-interaction --no-dev --ignore-platform-req=ext-intl
 
 RUN mkdir -p /var/www/html
