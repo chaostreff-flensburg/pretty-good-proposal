@@ -12,7 +12,7 @@ COPY ./ /var/www/html
 
 RUN ls -al
 
-RUN composer install --optimize-autoloader --no-interaction --no-dev --ignore-platform-req=ext-intl
+RUN composer install --no-interaction --no-dev --ignore-platform-req=ext-intl
 
 RUN mkdir -p /var/www/html
 
