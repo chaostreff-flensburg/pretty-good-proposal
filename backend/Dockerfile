@@ -8,42 +8,25 @@ WORKDIR /var/www/html
 # Install Composer manually
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
-RUN apk add --no-cache \
-    npm
-
 COPY ./ /var/www/html
+
+RUN ls -al
 
 RUN composer install --optimize-autoloader --no-interaction --no-dev --ignore-platform-req=ext-intl
 
-FROM unit:php8.2
-
 RUN mkdir -p /var/www/html
-RUN mkdir -p /var/www/html/databasestore
-
-WORKDIR /var/www/html
-
-COPY --from=build --chown=unit:unit /var/www/html /var/www/html
 
 ENV TZ=Europe/Berlin
 
-# Update package lists and install required dependencies
-RUN apt-get update && apt-get install -y \
-    netcat-traditional \
-    libicu-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libfreetype6-dev \
-    sudo \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
+RUN apk add --no-cache \
+    icu-dev \
+    icu-libs \
+    zlib-dev
 # Install and enable the intl and gd extensions
-RUN docker-php-ext-install intl gd pdo_mysql
+RUN docker-php-ext-install intl pdo_mysql
 
-COPY docker/config.json /docker-entrypoint.d/config.json
-
-COPY docker/entrypoint.sh /docker-entrypoint.d/entrypoint.sh
-
-RUN chmod +x /docker-entrypoint.d/entrypoint.sh
+RUN chmod +x /var/www/html/entrypoint.sh
 
 EXPOSE 80
+ENTRYPOINT ["sh", "/var/www/html/entrypoint.sh" ]
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html/public"]
