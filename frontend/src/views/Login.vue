@@ -12,8 +12,8 @@ const router = useRouter();
 const route = useRoute();
 
 const loading = ref(false);
-const email = ref(import.meta.env.PROD ? "" : "root@chaostreff-flensburg.de");
-const password = ref(import.meta.env.PROD ? "" : "password");
+const email = ref(import.meta.env.PROD ? "" : "samuel+root@chaostreff-flensburg.de");
+const password = ref(import.meta.env.PROD ? "" : "rootroot");
 
 const onSubmit = async () => {
   loading.value = true;
