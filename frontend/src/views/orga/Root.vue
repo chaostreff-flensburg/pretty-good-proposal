@@ -4,6 +4,10 @@ import { client } from "../../lib/api";
 import CreateTrack from "../../components/CreateTrack.vue";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
 
 const tracks = ref([])
 const users = ref([])
@@ -35,26 +39,37 @@ const addUserToTrack = async (track_id) => {
     usernameInput.value[track_id] = ''
 }
 const onSubmitNewUser = async () => {
-    const response = await client.post('user', {
-        email: email.value,
-        username: username.value,
-        password: password.value
-    })
-    console.log(response)
-    if (response.status === 201) {
-        alert('Benutzer wurde erstellt')
-    } else {
-        alert('Benutzer konnte nicht erstellt werden')
+    try {
+        console.log("Creating new user");
+
+        const response = await client.post('user', {
+            email: email.value,
+            username: username.value,
+            password: password.value
+        })
+        console.log(response)
+        if (response.status === 201) {
+            console.log("Toast status success");
+
+            toast.add({ severity: 'success', summary: 'Benutzy wurde angelegt', life: 6000 });
+        } else {
+            console.log("Toast status error");
+
+            toast.add({ severity: 'error', summary: `Fehler: ${response}`, life: 6000 });
+        }
+        email.value = ''
+        username.value = ''
+        password.value = ''
+        loadUsers()
+    } catch (error) {
+        toast.add({ severity: 'error', summary: `Fehler: ${error}`, life: 6000 });
     }
-    email.value = ''
-    username.value = ''
-    password.value = ''
-    loadUsers()
 }
 loadTracks()
 loadUsers()
 </script>
 <template>
+    <Toast />
     <h1>Root Verwaltung</h1>
     <h2>Tracks</h2>
     <section v-if="tracks.length">
@@ -71,7 +86,7 @@ loadUsers()
         <p>Keine Tracks vorhanden</p>
     </section>
 
-    <CreateTrack />
+    <CreateTrack @reload-data="loadTracks()" />
     <h2>Benutzy Erstellen</h2>
 
     <form @submit.prevent="onSubmitNewUser">
