@@ -31,6 +31,7 @@ Route::post('track/users', [\App\Http\Controllers\TrackController::class, 'addUs
 
 Route::post('proposals', [\App\Http\Controllers\ProposalController::class, 'create']);
 Route::get('proposal/{proposal}', [\App\Http\Controllers\ProposalController::class, 'show']);
+Route::delete('proposal/{proposal}', [\App\Http\Controllers\ProposalController::class, 'destroy']);
 Route::post('proposal/{proposal}/opinion', [\App\Http\Controllers\ProposalController::class, 'upsertOpinion']);
 Route::post('proposal/{proposal}/updateStatus', [\App\Http\Controllers\ProposalController::class, 'updateStatus']);
 

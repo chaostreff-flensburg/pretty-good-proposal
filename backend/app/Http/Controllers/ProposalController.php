@@ -43,6 +43,15 @@ class ProposalController extends Controller
         return $proposal->only('id');
     }
 
+    public function destroy(Proposal $proposal)
+    {
+        if (!Auth::check()){
+            abort(403);
+        }
+        
+        return $proposal->delete();
+    }
+
     public function show(Proposal $proposal)
     {
         if (!Auth::check()){

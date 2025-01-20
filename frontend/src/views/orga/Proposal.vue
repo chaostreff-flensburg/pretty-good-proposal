@@ -17,6 +17,7 @@ import { useDialog } from "primevue/usedialog";
 import PrivateKeyForm from "../../components/PrivateKeyForm.vue";
 import lf from "localforage";
 import EasyProposalCommunication from "../../components/EasyProposalCommunication.vue";
+import DeleteProposal from "../../components/DeleteProposal.vue";
 
 const dialog = useDialog();
 
@@ -171,5 +172,8 @@ const fieldName = (name) => {
         <ProposalStatusForm v-if="proposalId" :proposal-id="route.params.id" :proposal-status="proposal.status" />
       </div>
     </div>
+    <hr />
+    <DeleteProposal :proposal-id="route.params.id" />
+    <br />
   </template>
 </template>
