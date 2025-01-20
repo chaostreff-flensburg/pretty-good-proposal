@@ -2,9 +2,15 @@
 import InputText from "primevue/inputtext";
 import Textarea from 'primevue/textarea';
 import Button from "primevue/button";
+import Toast from 'primevue/toast';
 import { ref } from "vue";
 import { client } from "../lib/api";
 import { generateKeypair } from "../lib/crypto"
+import { useToast } from 'primevue/usetoast';
+
+const emit = defineEmits(["reload-data"])
+
+const toast = useToast();
 
 const loading = ref(false);
 
@@ -32,14 +38,23 @@ const onSubmit = async () => {
             public_key: public_key.value
         })
         console.log(response)
+        toast.add({ severity: 'success', summary: 'Track wurde angelegt', life: 6000 });
+        emit("reload-data");
+
+        name.value = "";
+        slug.value = "";
+        public_key.value = "";
+        private_key.value = "";
     } catch (error) {
         console.error(error)
+        toast.add({ severity: 'error', summary: `Fehler: ${error}`, life: 6000 });
     }
     loading.value = false;
 };
 
-</script>   
+</script>
 <template>
+    <Toast />
     <h2>Neuen Track anlegen</h2>
     <form @submit.prevent="onSubmit">
         <div class="field grid">
