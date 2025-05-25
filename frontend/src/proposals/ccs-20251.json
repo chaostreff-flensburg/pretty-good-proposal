@@ -1,0 +1,211 @@
+{
+    "title": {
+        "de": "Chaotischer Catalysator Stipendien 2025.01",
+        "en": "Chaotic Catalyst Scholarships 2025.01"
+    },
+    "deadline": 1761428562,
+    "description": {
+        "de": "Mit dem “Chaotischen Catalysator Stipendien #CCS” werden pro Semester vier Stipendien für Masterarbeiten vergeben. Jedes Stipendium wird in Höhe von insgesamt 1.500€ gefördert.",
+        "en": "The Chaotic Catalyst Scholarships #CCS will award four scholarships each scholarship will be funded in the total amount of 1.500€."
+    },
+    "submit": {
+        "de": "Abschicken",
+        "en": "Submit"
+    },
+    "successMessage": {
+        "de": "Deine Bewerbung wurde erfolgreich abgeschickt. Wir werden uns in den nächsten 4 - 8 Wochen bei dir melden.",
+        "en": "Your application has been successfully submitted. We will contact you in the next 4 - 8 weeks."
+    },
+    "errorMessage": {
+        "de": "Deine Bewerbung konnte nicht abgeschickt werden. Bitte versuche es später noch einmal.",
+        "en": "Your application could not be submitted. Please try again later."
+    },
+    "saveMessage": {
+        "de": "Deine Bewerbung wurde erfolgreich gespeichert.",
+        "en": "Your application has been saved successfully."
+    },
+    "incorectCaptchaMessage": {
+        "de": "Das Captcha ist nicht richtig. Bitte versuche es noch einmal.",
+        "en": "The captcha is not correct. Please try again."
+    },
+    "maxLength": {
+        "de": "maximale Zeichen: ",
+        "en": "Max character: "
+    },
+    "fields": [
+        {
+            "key": "name",
+            "label": {
+                "de": "Name",
+                "en": "Name"
+            },
+            "type": "input",
+            "max": 72,
+            "required": true
+        },
+        {
+            "key": "pronoun",
+            "label": {
+                "de": "Pronomen (optional)",
+                "en": "Pronoun (optional)"
+            },
+            "type": "input",
+            "max": 72,
+            "required": false
+        },
+        {
+            "key": "email",
+            "label": {
+                "de": "E-Mail-Adresse (Hochschule/Universität)",
+                "en": "E-mail address (College/University)"
+            },
+            "type": "input",
+            "max": 95,
+            "required": true
+        },
+        {
+            "key": "email",
+            "label": {
+                "de": "E-Mail-Adresse (Privat)",
+                "en": "E-mail address (Private)"
+            },
+            "type": "input",
+            "max": 95,
+            "required": true
+        },
+        {
+            "key": "hochschule",
+            "label": {
+                "de": "Hochschule/Universität",
+                "en": "College/University"
+            },
+            "type": "input",
+            "max": 95,
+            "required": true
+        },
+        {
+            "key": "startdate",
+            "label": {
+                "de": "(geplantes) Startdatum",
+                "en": "(planned) start date"
+            },
+            "type": "input",
+            "max": 95,
+            "required": true
+        },
+        {
+            "key": "institutProfessor",
+            "label": {
+                "de": "Institut/Professur (optional)",
+                "en": "Institute/Professorship (optional)"
+            },
+            "type": "input",
+            "max": 95,
+            "required": false
+        },
+        {
+            "key": "title",
+            "label": {
+                "de": "Titel der Masterarbeit",
+                "en": "Title of the Master's thesis"
+            },
+            "type": "input",
+            "max": 95,
+            "required": true
+        },
+        {
+            "key": "thesisTask",
+            "label": {
+                "de": "Wie ist die Aufgabenstellung deiner Arbeit?",
+                "en": "What is the task of your thesis?"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "reasonApplicationThesis",
+            "label": {
+                "de": "Warum passt deine Arbeit ins Thema?",
+                "en": "Why does your thesis fit into the topic?"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "reasonApplicationPerson",
+            "label": {
+                "de": "Erzähl uns etwas über dich?",
+                "en": "Tell us something about yourself?"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": false
+        },
+        {
+            "key": "reasonThesisImprovesWorld",
+            "label": {
+                "de": "Wie macht deine Arbeit die Welt (ein kleines bischen) besser",
+                "en": "How does your thesis make the world (a little bit) better"
+            },
+            "type": "input",
+            "max": 240,
+            "required": true
+        },
+        {
+            "key": "presentingResult",
+            "label": {
+                "de": "Kannst du dir Vorstellen deine Arbeitsergebnisse in einem zusätzlichen Format aufzuarbeiten? Zum Beispiel in einem Fachartikel, Podcastfolge, Poster, Vortrag, Kurzvideo, Interview, usw ...",
+                "en": "Can you imagine presenting the results of your work in an additional format? For example in a specialised article, podcast, poster, lecture, short video, interview, etc ..."
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": true
+        },
+        {
+            "key": "marketing",
+            "label": {
+                "de": "Wie hast du von dem Stipendium erfahren?",
+                "en": "How did you learn about the scholarship?"
+            },
+            "type": "textarea",
+            "max": 1000,
+            "required": true
+        },
+        {
+            "key": "captcha",
+            "label": {
+                "de": "Captcha: Aus welcher Stadt kommt der Chaos Computer Club Flensburg e.V.?",
+                "en": "Captcha: From which city does the the Chaos Computer Club Flensburg e.V. comes from?"
+            },
+            "type": "input",
+            "required": true
+        },
+        {
+            "key": "approval",
+            "label": {
+                "de": "Ich habe die Förderbedingungen und den Zeitplan gelesen und verstanden",
+                "en": "I have read and understood the funding conditions and the schedule"
+            },
+            "type": "checkbox",
+            "required": true
+        }
+    ],
+    "linklist": [
+        {
+            "label": {
+                "de": "Förderbedinungen",
+                "en": "funding conditions"
+            },
+            "target": "https://chaos-stipendien.de/#stipendiumsbedingungen"
+        },
+        {
+            "label": {
+                "de": "Blog",
+                "en": "Blog"
+            },
+            "target": "https://chaos-stipendien.de/blog/page/1/"
+        }
+    ]
+}
