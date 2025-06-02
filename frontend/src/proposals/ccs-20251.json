@@ -146,8 +146,8 @@
         {
             "key": "reasonThesisImprovesWorld",
             "label": {
-                "de": "Wie macht deine Arbeit die Welt (ein kleines bischen) besser",
-                "en": "How does your thesis make the world (a little bit) better"
+                "de": "Wie macht deine Arbeit die Welt (ein bischen) besser",
+                "en": "How does your thesis make the world (a bit) better"
             },
             "type": "input",
             "max": 240,
@@ -198,7 +198,7 @@
                 "de": "Förderbedinungen",
                 "en": "funding conditions"
             },
-            "target": "https://chaos-stipendien.de/#stipendiumsbedingungen"
+            "target": "https://chaos-stipendien.de/#scholarhip-terms"
         },
         {
             "label": {
