@@ -64,7 +64,7 @@
             "required": true
         },
         {
-            "key": "email",
+            "key": "emailPrivate",
             "label": {
                 "de": "E-Mail-Adresse (Privat)",
                 "en": "E-mail address (Private)"
