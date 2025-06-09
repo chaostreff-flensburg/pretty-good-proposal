@@ -18,7 +18,7 @@ class TrackController extends Controller
         }
         $user = Auth::user();
         if($user->username === 'root'){
-            return Track::all();
+            return Track::with('users')->get();
         }
         $userTracks = User::where('id', $user->id)->with('tracks')->first();
         return $userTracks->tracks;

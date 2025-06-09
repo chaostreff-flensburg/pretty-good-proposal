@@ -31,10 +31,12 @@ class UserController extends Controller
         if (!Auth::check()){
             abort(403);
         }
-        if(Auth::user()->username != $user->username){
+        if(!(Auth::user()->username == $user->username ||  Auth::user()->username == "root")){
             abort(403);
         }
-        $user->username = $request->username;
+        if($request->username){
+            $user->username = $request->username;
+        }
         $user->email = $request->email;
         $user->save();
         return $user;

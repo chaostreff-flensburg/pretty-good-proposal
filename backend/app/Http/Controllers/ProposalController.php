@@ -27,18 +27,24 @@ class ProposalController extends Controller
         $proposal->status = 'created';
         $proposal->save();
 
-        try{
-            if($request->email){
+       
+        if($request->email){
+                try{
                 // send recipent emails
-                Mail::to($request->email)->send(new ConfirmProposalCreated($proposal->id));
-                // send email to the track users
-                foreach($track->users as $user){
-                    Mail::to($user->email)->send(new InfoProposalCreated($proposal->id, $proposal->name, env('FRONTEND_URL').'/proposal/'.$proposal->id));
+                    Mail::to($request->email)->send(new ConfirmProposalCreated($proposal->id));
+                }catch(\Exception $e){
+                    Log::error($e);
                 }
-            }
-        }catch(\Exception $e){
-            Log::error($e);
+                foreach($track->users as $user){
+                    // send email to the track users
+                    try{
+                        Mail::to($user->email)->send(new InfoProposalCreated($proposal->id, $proposal->name, env('FRONTEND_URL').'/proposal/'.$proposal->id));
+                    }catch(\Exception $e){
+                        Log::error($e);
+                    }
+                }
         }
+       
 
         return $proposal->only('id');
     }
