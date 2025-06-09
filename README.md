@@ -2,7 +2,7 @@
 
 Mange different proposals tracks with a simple web application [License](./LICENSE).
 
-First build to manage [Chaotic Catalyst Scholarships (CCS)](https://ccs.chaostreff-flensburg.de/).
+First build to manage [Chaotic Catalyst Scholarships (CCS)](https://chaos-stipendien.de/).
 
 You can see a running version [bewerben.c3fl.de](https://bewerben.c3fl.de). You can find a very [short talk (2:40 Minutes) from cccamp23 on youtube](https://youtu.be/y4a9_POxGws?si=DWvt5urfD1hWnc-6)
 
