@@ -136,8 +136,8 @@
         {
             "key": "reasonApplicationPerson",
             "label": {
-                "de": "Erzähl uns etwas über dich?",
-                "en": "Tell us something about yourself?"
+                "de": "Erzähl uns etwas über dich:",
+                "en": "Tell us something about yourself:"
             },
             "type": "textarea",
             "max": 1000,
