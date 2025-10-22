@@ -5,7 +5,7 @@ export const newProposalStatusEmailTemplate = {
     Samuel Brinkmann
     Chaotischer Catalysator Stipendien Beirat / Chaotischer Catalysator Scholarship Advisory Board
 
-    Chaostreff Flensburg e. V.
+    Chaos Computer Club Flensburg e. V.
     Apenrader Str. 49
     24939 Flensburg
     `,

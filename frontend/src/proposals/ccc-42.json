@@ -210,8 +210,8 @@
         {
             "key": "captcha",
             "label": {
-                "de": "Captcha: Aus welcher Stadt kommt der Chaostreff Flensburg e.V.?",
-                "en": "Captcha: From which city does the the Chaostreff Flensburg e.V. comes from?"
+                "de": "Captcha: Aus welcher Stadt kommt der Chaos Computer Club Flensburg e.V.?",
+                "en": "Captcha: From which city does the the Chaos Computer Club Flensburg e.V. comes from?"
             },
             "type": "input",
             "required": true
