@@ -46,8 +46,8 @@
         {
             "key": "chosenName",
             "label": {
-                "de": "Prä­fe­rie­rter Name",
-                "en": "Chosen Name"
+                "de": "Prä­fe­rie­rter Name (optional)",
+                "en": "Chosen Name (optional)"
             },
             "type": "input",
             "max": 72,
