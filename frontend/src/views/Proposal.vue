@@ -9,6 +9,7 @@ import InputNumber from "primevue/inputnumber";
 import Textarea from "primevue/textarea";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
+import Dropdown from "primevue/dropdown";
 import Card from 'primevue/card';
 import ProgressSpinner from "primevue/progressspinner";
 import Message from 'primevue/message';
@@ -41,7 +42,9 @@ if (route.query?.proposal || proposals[route.query.proposal]) {
       if (field.type === 'checkbox') {
         proposal.value[field.key] = false
       }
-      if (field.type === 'number') {
+      if (field.type === 'select') {
+        proposal.value[field.key] = field.default ?? field.options?.[0]?.value
+      } else if (field.type === 'number') {
         proposal.value[field.key] = field.min
       } else {
         proposal.value[field.key] = import.meta.env.PROD ? "" : 'flensburg'
@@ -151,6 +154,10 @@ const saveProposal = async (encryptedData, encryptedSymatricKey) => {
               </template>
               <template v-else-if="field.type === 'checkbox'">
                 <Checkbox :id="field.key" v-model="proposal[field.key]" :binary="true" :required="field.required" />
+              </template>
+              <template v-else-if="field.type === 'select'">
+                <Dropdown :id="field.key" v-model="proposal[field.key]" :options="field.options" option-value="value"
+                  :option-label="(o) => i18n(o.label)" :required="field.required" />
               </template>
               <small>
                 <span v-if="field.help">{{ i18n(field.help) }}</span>

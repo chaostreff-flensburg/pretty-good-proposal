@@ -3,8 +3,10 @@ import ccs20241 from './ccs-20241.json'
 import ccs20242 from './ccs-20242.json'
 import ccs20251 from './ccs-20251.json'
 import ccs20252 from './ccs-20252.json'
+import ccs20261 from './ccs-20261.json'
 
 export const proposals = {
+    'ccs-20261': ccs20261,
     'ccc-42': ccc42,
     'ccs-20241': ccs20241,
     'ccs-20242': ccs20242,
