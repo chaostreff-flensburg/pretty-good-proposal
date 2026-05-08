@@ -181,8 +181,8 @@
         {
             "key": "methodology",
             "label": {
-                "de": "Erzähl uns etwas über deine Methode(n):",
-                "en": "Tell us about your method(s):"
+                "de": "Erzähl uns etwas über deine Methodik(en):",
+                "en": "Tell us a bit about your methodology:"
             },
             "type": "textarea",
             "max": 500,
