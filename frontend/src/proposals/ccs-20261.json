@@ -1,12 +1,12 @@
 {
     "title": {
-        "de": "Chaotischer Catalysator Stipendien 2026.01",
-        "en": "Chaotic Catalyst Scholarships 2026.01"
+        "de": "Chaotischer Catalysator Stipendien 2026.01 - Nur noch Fokus Thema Bewerbungen möglich",
+        "en": "Chaotic Catalyst Scholarships 2026.01 - Only Focus Topic Applications possible"
     },
     "deadline": 1793486562,
     "description": {
-        "de": "Mit dem “Chaotischen Catalysator Stipendien #CCS” werden pro Semester vier Stipendien für Masterarbeiten vergeben. Jedes Stipendium wird in Höhe von insgesamt 1.500€ gefördert.",
-        "en": "The Chaotic Catalyst Scholarships #CCS will award four scholarships each scholarship will be funded in the total amount of 1.500€."
+        "de": "Nur noch Fokus Thema Bewerbungen möglich. Mit dem “Chaotischen Catalysator Stipendien #CCS” werden pro Semester vier Stipendien für Masterarbeiten vergeben. Jedes Stipendium wird in Höhe von insgesamt 1.500€ gefördert.",
+        "en": "Only focus topic applications are possible. The Chaotic Catalyst Scholarships #CCS will award four scholarships each scholarship will be funded in the total amount of 1.500€."
     },
     "submit": {
         "de": "Abschicken",
@@ -136,19 +136,12 @@
         {
             "key": "programType",
             "label": {
-                "de": "Art der Bewerbung",
-                "en": "Type of Application"
+                "de": "Art der Bewerbung - Nur noch Fokus Thema Bewerbungen möglich",
+                "en": "Type of Application - Only Focus Topic Applications possible"
             },
             "type": "select",
             "required": true,
             "options": [
-                {
-                    "value": "generalApplication",
-                    "label": {
-                        "de": "Generelle Bewerbung",
-                        "en": "General Application"
-                    }
-                },
                 {
                     "value": "focusTopic",
                     "label": {
@@ -240,8 +233,8 @@
         {
             "key": "approval",
             "label": {
-                "de": "Ich habe die Förderbedingungen und den Zeitplan gelesen und verstanden",
-                "en": "I have read and understood the funding conditions and the schedule"
+                "de": "Ich habe die Förderbedingungen und den Zeitplan gelesen und verstanden. Es handelt sich um eine Bewerbung für das Fokus Thema: unabhängige soziale Netzwerke/ Fediverse",
+                "en": "I have read and understood the funding conditions and the schedule. This is an application for the focus topic: independent social networks/ Fediverse"
             },
             "type": "checkbox",
             "required": true
