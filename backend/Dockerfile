@@ -1,30 +1,33 @@
-FROM php:8.2-cli-alpine3.18 AS build
-
-RUN mkdir -p /var/www/html
-RUN mkdir -p /var/www/html/databasestore
-
-WORKDIR /var/www/html
-
-# Install Composer manually
-COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
-
-COPY ./ /var/www/html
-
-RUN composer install --no-interaction --no-dev --ignore-platform-req=ext-intl
-
-RUN mkdir -p /var/www/html
+FROM php:8.5-cli-alpine3.24
 
 ENV TZ=Europe/Berlin
 
-RUN apk add --no-cache \
-    icu-dev \
-    icu-libs \
-    zlib-dev
-# Install and enable the intl and gd extensions
-RUN docker-php-ext-install intl pdo_mysql
+WORKDIR /var/www/html
 
-RUN chmod +x /var/www/html/entrypoint.sh
+# Pull in Alpine security fixes released after the base image was built
+RUN apk upgrade --no-cache
+
+# Install the intl and pdo_mysql extensions; build-only packages are removed afterwards
+RUN apk add --no-cache icu-libs su-exec \
+    && apk add --no-cache --virtual .build-deps icu-dev \
+    && docker-php-ext-install intl pdo_mysql \
+    && apk del .build-deps
+
+# Hardened defaults: no display_errors, no X-Powered-By header
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && echo "expose_php = Off" > "$PHP_INI_DIR/conf.d/security.ini"
+
+COPY --from=composer/composer:2-bin /composer /usr/bin/composer
+
+# Install dependencies first so this layer is cached until composer.lock changes
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader --prefer-dist
+
+COPY . .
+RUN composer dump-autoload --no-interaction --no-dev --optimize \
+    && mkdir -p databasestore \
+    && chown -R www-data:www-data storage bootstrap/cache databasestore
 
 EXPOSE 80
-ENTRYPOINT ["sh", "/var/www/html/entrypoint.sh" ]
+ENTRYPOINT ["sh", "/var/www/html/entrypoint.sh"]
 CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html/public"]
